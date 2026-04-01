@@ -1,0 +1,201 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+type Stage = "idle" | "flying" | "splitting" | "done";
+
+export default function EntranceScreen() {
+  const [visible, setVisible] = useState(false);
+  const [zip, setZip] = useState("");
+  const [stage, setStage] = useState<Stage>("idle");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  /* Check session on mount — only show once per session */
+  useEffect(() => {
+    const entered = sessionStorage.getItem("handi_entered");
+    if (!entered) {
+      setVisible(true);
+      setTimeout(() => inputRef.current?.focus(), 400);
+    }
+  }, []);
+
+  const handleSubmit = () => {
+    if (stage !== "idle") return;
+    setStage("flying");
+
+    // Curtains open when plane is crossing center (~30% into flight)
+    setTimeout(() => setStage("splitting"), 750);
+
+    // Done after curtains finish (750 + 600 + 100 buffer)
+    setTimeout(() => {
+      sessionStorage.setItem("handi_entered", "1");
+      setStage("done");
+      setTimeout(() => setVisible(false), 80);
+    }, 1550);
+  };
+
+  const handleKey = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") handleSubmit();
+  };
+
+  if (!visible) return null;
+
+  const isFlying   = stage === "flying" || stage === "splitting" || stage === "done";
+  const isSplitting = stage === "splitting" || stage === "done";
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <>
+          {/* Top curtain */}
+          <motion.div
+            key="curtain-top"
+            className="fixed top-0 left-0 w-full h-1/2 z-[55] pointer-events-none"
+            style={{ backgroundColor: "#0C0C0B" }}
+            animate={isSplitting ? { y: "-100%" } : { y: 0 }}
+            transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+          />
+
+          {/* Bottom curtain */}
+          <motion.div
+            key="curtain-bottom"
+            className="fixed bottom-0 left-0 w-full h-1/2 z-[55] pointer-events-none"
+            style={{ backgroundColor: "#0C0C0B" }}
+            animate={isSplitting ? { y: "100%" } : { y: 0 }}
+            transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+          />
+
+          {/* Airplane — flies across the screen */}
+          <motion.div
+            key="airplane"
+            className="fixed top-1/2 -translate-y-1/2 z-[60] pointer-events-none"
+            initial={{ x: -200 }}
+            animate={isFlying ? { x: "calc(100vw + 200px)" } : { x: -200 }}
+            transition={{ duration: 2.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {/* Try airplane.png first; fallback to SVG */}
+            <AirplaneSVG />
+          </motion.div>
+
+          {/* Form overlay — sits above curtains on z-[56], fades out when flying */}
+          <motion.div
+            key="form"
+            className="fixed inset-0 z-[56] flex flex-col items-center justify-center px-6"
+            style={{ backgroundColor: "#0C0C0B" }}
+            animate={isFlying ? { opacity: 0, pointerEvents: "none" } : { opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            {/* Subtle noise texture */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+              style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")" }}
+            />
+
+            <motion.div
+              className="w-full max-w-[480px] text-center relative z-10"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {/* Eyebrow */}
+              <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-white/30 mb-8">
+                Site Entrance
+              </p>
+
+              {/* Headline */}
+              <h1 className="text-[clamp(2.2rem,6vw,3.5rem)] font-black text-white leading-[1.05] tracking-[-0.04em] mb-10">
+                Enter your ZIP code
+              </h1>
+
+              {/* Input */}
+              <input
+                ref={inputRef}
+                type="text"
+                inputMode="numeric"
+                maxLength={10}
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
+                onKeyDown={handleKey}
+                placeholder="ZIP code"
+                className="w-full text-center text-[1.125rem] text-white/80 placeholder:text-white/20
+                           bg-white/[0.06] border border-white/10 rounded-full
+                           px-7 py-5 mb-4
+                           focus:outline-none focus:border-white/20 focus:bg-white/[0.08]
+                           transition-all duration-200"
+              />
+
+              {/* Hint */}
+              <p className="text-[13px] text-white/25 mb-8">
+                Press Enter to preview the airplane opening animation
+              </p>
+
+              {/* Button */}
+              <button
+                onClick={handleSubmit}
+                className="inline-flex items-center justify-center gap-2.5
+                           bg-white/10 hover:bg-white/15 active:scale-[0.97]
+                           border border-white/10 text-white font-semibold text-[15px]
+                           rounded-full px-10 py-4 transition-all duration-200"
+              >
+                Start preview
+              </button>
+            </motion.div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
+
+function AirplaneSVG() {
+  return (
+    <div className="relative">
+      <svg
+        width="200"
+        height="80"
+        viewBox="0 0 200 80"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="drop-shadow-[0_0_28px_rgba(255,69,0,0.45)]"
+      >
+        {/* Fuselage */}
+        <ellipse cx="104" cy="40" rx="76" ry="13" fill="white" />
+        {/* Nose cone */}
+        <path d="M180 40 C194 37 198 40 196 43 C194 46 180 43 180 40Z" fill="white" />
+        {/* Tail fin vertical */}
+        <path d="M32 40 L18 16 L40 30 Z" fill="white" />
+        {/* Main wing */}
+        <path d="M115 40 L88 10 L145 28 Z" fill="white" opacity="0.92"/>
+        {/* Rear stabiliser */}
+        <path d="M44 40 L34 54 L58 46 Z" fill="white" opacity="0.85"/>
+        {/* Engine pod */}
+        <ellipse cx="112" cy="51" rx="16" ry="6" fill="#DEDAD4" />
+        {/* Accent stripe on fuselage (orange) */}
+        <rect x="50" y="37" width="120" height="2" rx="1" fill="#FF4500" opacity="0.7" />
+        {/* Windows */}
+        <circle cx="160" cy="37" r="3" fill="#0C0C0B" opacity="0.25"/>
+        <circle cx="148" cy="36" r="3" fill="#0C0C0B" opacity="0.25"/>
+        <circle cx="136" cy="35.5" r="3" fill="#0C0C0B" opacity="0.25"/>
+        <circle cx="124" cy="35" r="3" fill="#0C0C0B" opacity="0.25"/>
+        {/* handi wordmark on fuselage side */}
+        <text
+          x="72"
+          y="44"
+          fontFamily="system-ui, -apple-system, sans-serif"
+          fontSize="10"
+          fontWeight="900"
+          letterSpacing="-0.3"
+          fill="#0C0C0B"
+          opacity="0.55"
+        >
+          handi
+        </text>
+        {/* Orange dot after handi */}
+        <circle cx="103" cy="40" r="2" fill="#FF4500" opacity="0.7" />
+        {/* Exhaust trail */}
+        <ellipse cx="22" cy="40" rx="10" ry="4" fill="rgba(255,69,0,0.45)" />
+        <ellipse cx="10" cy="40" rx="7" ry="2.5" fill="rgba(255,69,0,0.20)" />
+      </svg>
+    </div>
+  );
+}

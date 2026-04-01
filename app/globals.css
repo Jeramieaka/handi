@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  background: #F7F5F0;
+  color: #0C0C0B;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Display headings use Bricolage Grotesque */
+.font-display,
+.text-d1, .text-d2, .text-d3 {
+  font-family: var(--font-display), system-ui, sans-serif;
+}
+
+/* Selection */
+::selection { background: rgba(255,69,0,0.14); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #C8C4BC; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #FF4500; }
+
+@layer components {
+  /* Container */
+  .wrap { @apply max-w-[1200px] mx-auto px-6 lg:px-10; }
+  .wrap-wide { @apply max-w-[1400px] mx-auto px-6 lg:px-10; }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2.5 font-semibold
+           rounded-full transition-all duration-200 active:scale-[0.97]
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-white px-8 py-4 text-[15px]
+           hover:bg-accent-hover hover:brightness-105
+           shadow-[0_4px_18px_rgba(255,69,0,0.30)];
+  }
+  .btn-outline {
+    @apply btn bg-transparent text-ink px-8 py-4 text-[15px]
+           border-2 border-border hover:border-ink/30 hover:bg-warm;
+  }
+  .btn-ghost-white {
+    @apply btn text-white/70 px-8 py-4 text-[15px]
+           border border-white/15 hover:bg-white/10 hover:text-white;
+  }
+  .btn-sm {
+    @apply btn bg-accent text-white px-5 py-2.5 text-sm
+           hover:bg-accent-hover;
+  }
+
+  /* Label above section headings */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-bold tracking-[0.18em] uppercase text-accent;
+  }
+
+  /* Card — editorial radius (16px) */
+  .card {
+    @apply bg-white rounded-2xl border border-border/60 shadow-soft;
+  }
+
+  /* Tag */
+  .tag {
+    @apply inline-flex items-center text-xs font-medium
+           bg-warm text-muted border border-border
+           px-3 py-1 rounded-full;
+  }
+
+  /* Status badges */
+  .badge-green  { @apply text-[11px] font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200; }
+  .badge-blue   { @apply text-[11px] font-semibold px-2.5 py-1 rounded-full bg-blue-50   text-blue-700   border border-blue-200;   }
+  .badge-orange { @apply text-[11px] font-semibold px-2.5 py-1 rounded-full bg-accent-light text-accent border border-accent/20;    }
+
+  /* Marquee — infinite scroll ticker */
+  .marquee-track {
+    @apply flex gap-0 will-change-transform;
+    animation: marquee 32s linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+}
