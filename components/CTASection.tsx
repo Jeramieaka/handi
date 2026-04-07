@@ -21,7 +21,8 @@ export default function CTASection() {
           <div className="relative bg-ink rounded-[2.5rem] overflow-hidden px-10 py-20 lg:py-28 text-center">
 
             {/* Glow effects */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_100%,rgba(255,69,0,0.18),transparent)] pointer-events-none" />
+            <div className="absolute inset-0 pointer-events-none"
+              style={{ background: "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,69,0,0.20), transparent)" }} />
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-accent/30 to-transparent" />
 
             <motion.p initial={{ opacity:0,y:12 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
@@ -34,7 +35,7 @@ export default function CTASection() {
               className="text-d2 font-black text-white text-balance mb-6">
               Ready to carry,
               <br />
-              <span className="text-accent">or be carried?</span>
+              <span className="text-gradient">or be carried?</span>
             </motion.h2>
 
             <motion.p initial={{ opacity:0,y:16 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
@@ -49,7 +50,7 @@ export default function CTASection() {
               className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
               <Link href="/browse"
-                className="btn-primary text-[16px] px-10 py-4 shadow-[0_8px_32px_rgba(255,69,0,0.40)]">
+                className="btn-primary text-[16px] px-10 py-4">
                 Find a traveler
               </Link>
               <Link href="/post-trip" className="btn-ghost-white text-[16px] px-10 py-4">

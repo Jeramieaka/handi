@@ -92,7 +92,7 @@ export default function CheckoutPage() {
     <>
       <Navbar />
       <main className="min-h-screen bg-stone">
-        <div className="bg-ink border-b border-white/8 pt-20 pb-12">
+        <div className="bg-ink border-b border-white/8 pt-20 pb-12" >
           <div className="wrap">
             <p className="eyebrow mb-4 text-accent">Checkout</p>
             <h1 className="text-d2 font-black text-white">Almost there.</h1>
@@ -155,7 +155,7 @@ export default function CheckoutPage() {
                   style={{ background: "linear-gradient(135deg, #1a1a18 0%, #2d2d2b 50%, #1a1a18 100%)" }}>
                   {/* Shimmer pattern */}
                   <div className="absolute inset-0 opacity-10"
-                    style={{ backgroundImage: "radial-gradient(circle at 20% 80%, rgba(255,69,0,0.4) 0%, transparent 60%), radial-gradient(circle at 80% 20%, rgba(255,120,0,0.2) 0%, transparent 50%)" }}/>
+                    style={{ backgroundImage: "radial-gradient(circle at 20% 80%, rgba(255,69,0,0.40) 0%, transparent 60%), radial-gradient(circle at 80% 20%, rgba(255,120,0,0.20) 0%, transparent 50%)" }}/>
 
                   {/* Chip */}
                   <div className="absolute top-5 left-6">

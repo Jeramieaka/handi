@@ -67,7 +67,7 @@ export default function OfferPage() {
       <Navbar />
       <main className="min-h-screen bg-stone">
         {/* Hero bar */}
-        <div className="bg-ink border-b border-white/8 pt-20 pb-12">
+        <div className="bg-ink border-b border-white/8 pt-20 pb-12" >
           <div className="wrap">
             <Link href="/browse" className="inline-flex items-center gap-2 text-white/40 hover:text-white text-sm mb-6 transition-colors">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>

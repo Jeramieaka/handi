@@ -57,7 +57,14 @@ export default function HowItWorks() {
               {/* Steps */}
               <div className="space-y-0">
                 {col.steps.map((s, i) => (
-                  <div key={s.n} className="flex gap-6 group">
+                  <motion.div
+                    key={s.n}
+                    initial={{ opacity: 0, x: -18 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.6, delay: i * 0.15, ease: [0.22,1,0.36,1] }}
+                    className="flex gap-6 group"
+                  >
                     {/* Left: number + line */}
                     <div className="flex flex-col items-center">
                       <div className="w-10 h-10 rounded-2xl bg-white/8 border border-white/10 flex items-center justify-center text-xl flex-shrink-0">
@@ -76,7 +83,7 @@ export default function HowItWorks() {
                       </div>
                       <p className="text-sm text-white/45 leading-relaxed max-w-[360px]">{s.body}</p>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 

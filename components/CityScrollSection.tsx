@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import Image from "next/image";
 
 const CITIES = [
@@ -52,8 +53,13 @@ const CITIES = [
 ];
 
 function CityCard({ c }: { c: typeof CITIES[0] }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: cardRef, offset: ["start end", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+
   const img = (
     <motion.div
+      ref={cardRef}
       initial={{ x: c.isLeft ? -60 : 60, opacity: 0 }}
       whileInView={{ x: 0, opacity: 1 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -61,21 +67,24 @@ function CityCard({ c }: { c: typeof CITIES[0] }) {
       className="w-full lg:w-[54%] relative"
     >
       <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-float">
-        <Image
-          src={c.gifPath} alt={c.city} fill unoptimized
-          className="object-cover"
-          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-        />
-        {/* Placeholder — editorial dark card with city name */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${c.gradient} -z-10 flex flex-col items-end justify-end p-8`}>
-          {/* Subtle grid */}
-          <div className="absolute inset-0 opacity-[0.08]"
-            style={{ backgroundImage: "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)", backgroundSize: "40px 40px" }}
+        {/* Inner image moves on parallax */}
+        <motion.div style={{ y: imgY }} className="absolute inset-[-8%] w-[116%] h-[116%]">
+          <Image
+            src={c.gifPath} alt={c.city} fill unoptimized
+            className="object-cover"
+            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
           />
-          <span className="relative text-[clamp(3rem,8vw,5rem)] font-black text-white/15 leading-none tracking-tighter select-none">
-            {c.city.toUpperCase()}
-          </span>
-        </div>
+          {/* Placeholder — editorial dark card with city name */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${c.gradient} -z-10 flex flex-col items-end justify-end p-8`}>
+            {/* Subtle grid */}
+            <div className="absolute inset-0 opacity-[0.08]"
+              style={{ backgroundImage: "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)", backgroundSize: "40px 40px" }}
+            />
+            <span className="relative text-[clamp(3rem,8vw,5rem)] font-black text-white/15 leading-none tracking-tighter select-none">
+              {c.city.toUpperCase()}
+            </span>
+          </div>
+        </motion.div>
       </div>
     </motion.div>
   );
@@ -93,7 +102,17 @@ function CityCard({ c }: { c: typeof CITIES[0] }) {
         <span className="eyebrow">{c.num} / {c.city}</span>
       </div>
 
-      <h3 className="text-d3 font-black text-ink mb-4 text-balance">{c.tagline}</h3>
+      <div className="overflow-hidden mb-4">
+        <motion.h3
+          initial={{ y: "100%" }}
+          whileInView={{ y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease: [0.22,1,0.36,1], delay: 0.1 }}
+          className="text-d3 font-black text-ink text-balance"
+        >
+          {c.tagline}
+        </motion.h3>
+      </div>
       <p className="text-body text-muted leading-relaxed mb-8">{c.sub}</p>
 
       <ul className="space-y-3 mb-10">
@@ -132,12 +151,18 @@ export default function CityScrollSection() {
           transition={{ duration:0.5 }} className="eyebrow mb-5">
           What you can get
         </motion.p>
-        <motion.h2 initial={{ opacity:0,y:24 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
-          transition={{ duration:0.65, delay:0.1 }}
-          className="text-d2 font-black text-ink text-balance max-w-3xl mx-auto">
-          Every city has something<br />
-          <span className="text-accent">the world wants.</span>
-        </motion.h2>
+        <div className="overflow-hidden">
+          <motion.h2
+            initial={{ y: "100%" }}
+            whileInView={{ y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.75, delay: 0.1, ease: [0.22,1,0.36,1] }}
+            className="text-d2 font-black text-ink text-balance max-w-3xl mx-auto"
+          >
+            Every city has something<br />
+            <span className="text-accent">the world wants.</span>
+          </motion.h2>
+        </div>
         <motion.p initial={{ opacity:0,y:16 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
           transition={{ duration:0.55, delay:0.2 }}
           className="mt-5 text-body-lg text-muted max-w-xl mx-auto">

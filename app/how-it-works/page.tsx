@@ -37,7 +37,7 @@ export default function HowItWorksPage() {
       <main className="min-h-screen bg-stone">
 
         {/* Hero */}
-        <div className="bg-ink border-b border-white/8 pt-24 pb-20 text-center px-6">
+        <div className="bg-ink border-b border-white/8 pt-24 pb-20 text-center px-6" >
           <p className="eyebrow mb-5 text-accent">How it works</p>
           <h1 className="text-d1 font-black text-white text-balance max-w-3xl mx-auto mb-5">
             People helping people,<br/>

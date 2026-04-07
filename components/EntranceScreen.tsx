@@ -30,6 +30,10 @@ export default function EntranceScreen() {
     // Done after curtains finish (750 + 600 + 100 buffer)
     setTimeout(() => {
       sessionStorage.setItem("handi_entered", "1");
+      if (zip.trim()) {
+        sessionStorage.setItem("handi_zip", zip.trim());
+        window.dispatchEvent(new Event("storage"));
+      }
       setStage("done");
       setTimeout(() => setVisible(false), 80);
     }, 1550);
@@ -97,15 +101,19 @@ export default function EntranceScreen() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
-              {/* Eyebrow */}
-              <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-white/30 mb-8">
-                Site Entrance
-              </p>
+              {/* Logo mark */}
+              <div className="flex items-center justify-center gap-1 mb-10">
+                <span className="text-[22px] font-black tracking-tight text-white">handi</span>
+                <span className="w-[6px] h-[6px] rounded-full bg-accent mb-3" />
+              </div>
 
               {/* Headline */}
-              <h1 className="text-[clamp(2.2rem,6vw,3.5rem)] font-black text-white leading-[1.05] tracking-[-0.04em] mb-10">
-                Enter your ZIP code
+              <h1 className="text-[clamp(1.9rem,5vw,3rem)] font-black text-white leading-[1.05] tracking-[-0.04em] mb-3">
+                Where are you shopping from?
               </h1>
+              <p className="text-[14px] text-white/35 mb-8">
+                Enter your ZIP so we can show travelers near you.
+              </p>
 
               {/* Input */}
               <input
@@ -116,7 +124,7 @@ export default function EntranceScreen() {
                 value={zip}
                 onChange={(e) => setZip(e.target.value)}
                 onKeyDown={handleKey}
-                placeholder="ZIP code"
+                placeholder="e.g. 10001"
                 className="w-full text-center text-[1.125rem] text-white/80 placeholder:text-white/20
                            bg-white/[0.06] border border-white/10 rounded-full
                            px-7 py-5 mb-4
@@ -124,20 +132,49 @@ export default function EntranceScreen() {
                            transition-all duration-200"
               />
 
-              {/* Hint */}
-              <p className="text-[13px] text-white/25 mb-8">
-                Press Enter to preview the airplane opening animation
-              </p>
+              {/* ZIP preview pill — appears when user types */}
+              <div className="h-8 mb-6 flex items-center justify-center">
+                <AnimatePresence>
+                  {zip.trim().length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.85, y: 4 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.85, y: 4 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center gap-2 bg-accent/15 border border-accent/25 rounded-full px-4 py-1.5"
+                    >
+                      <svg className="w-3 h-3 text-accent" fill="none" viewBox="0 0 16 16">
+                        <path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="8" cy="6" r="1.5" stroke="currentColor" strokeWidth="1.5"/>
+                      </svg>
+                      <span className="text-[13px] font-semibold text-accent tracking-wide">{zip}</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
-              {/* Button */}
+              {/* Primary button */}
               <button
                 onClick={handleSubmit}
-                className="inline-flex items-center justify-center gap-2.5
-                           bg-white/10 hover:bg-white/15 active:scale-[0.97]
-                           border border-white/10 text-white font-semibold text-[15px]
-                           rounded-full px-10 py-4 transition-all duration-200"
+                className="w-full inline-flex items-center justify-center gap-2.5
+                           active:scale-[0.97] text-white font-bold text-[16px]
+                           rounded-full px-10 py-4 transition-all duration-200 mb-4"
+                style={{ background: "linear-gradient(135deg, #FF5214 0%, #D93A00 100%)", boxShadow: "0 4px 20px rgba(255,69,0,0.35)" }}
               >
-                Start preview
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
+                  <path d="M6 2L3 6v8a1 1 0 001 1h8a1 1 0 001-1V6l-3-4z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  <line x1="3" y1="6" x2="13" y2="6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+                  <path d="M10 9a2 2 0 01-4 0" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Start shopping
+              </button>
+
+              {/* Skip */}
+              <button
+                onClick={handleSubmit}
+                className="text-[13px] text-white/25 hover:text-white/50 transition-colors duration-200"
+              >
+                Skip for now →
               </button>
             </motion.div>
           </motion.div>
@@ -170,7 +207,7 @@ function AirplaneSVG() {
         <path d="M44 40 L34 54 L58 46 Z" fill="white" opacity="0.85"/>
         {/* Engine pod */}
         <ellipse cx="112" cy="51" rx="16" ry="6" fill="#DEDAD4" />
-        {/* Accent stripe on fuselage (orange) */}
+        {/* Accent stripe on fuselage */}
         <rect x="50" y="37" width="120" height="2" rx="1" fill="#FF4500" opacity="0.7" />
         {/* Windows */}
         <circle cx="160" cy="37" r="3" fill="#0C0C0B" opacity="0.25"/>
@@ -190,7 +227,7 @@ function AirplaneSVG() {
         >
           handi
         </text>
-        {/* Orange dot after handi */}
+        {/* Dot after handi */}
         <circle cx="103" cy="40" r="2" fill="#FF4500" opacity="0.7" />
         {/* Exhaust trail */}
         <ellipse cx="22" cy="40" rx="10" ry="4" fill="rgba(255,69,0,0.45)" />

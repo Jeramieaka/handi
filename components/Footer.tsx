@@ -45,9 +45,9 @@ export default function Footer() {
             <ul className="space-y-3.5">
               {[
                 { label: "Browse", href: "/browse" },
+                { label: "Buyer Requests", href: "/requests" },
                 { label: "Post a Trip", href: "/post-trip" },
                 { label: "How It Works", href: "/how-it-works" },
-                { label: "Marketplace", href: "/browse" },
               ].map(l => (
                 <li key={l.label}>
                   <Link href={l.href} className="text-sm text-white/50 hover:text-white transition-colors">{l.label}</Link>

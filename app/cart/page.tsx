@@ -13,7 +13,7 @@ export default function CartPage() {
     <>
       <Navbar />
       <main className="min-h-screen bg-stone">
-        <div className="bg-ink border-b border-white/8 pt-20 pb-12">
+        <div className="bg-ink border-b border-white/8 pt-20 pb-12" >
           <div className="wrap">
             <p className="eyebrow mb-4 text-accent">Your Cart</p>
             <h1 className="text-d2 font-black text-white">
