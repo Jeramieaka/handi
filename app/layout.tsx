@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Bricolage_Grotesque } from "next/font/google";
+import { Inter, Bricolage_Grotesque, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import EntranceScreen from "@/components/EntranceScreen";
 import { CartProvider } from "@/components/CartContext";
@@ -14,6 +14,14 @@ const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-display",
   weight: ["700", "800"],
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  style: ["normal", "italic"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -34,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${bricolage.variable}`}>
+    <html lang="en" className={`${inter.variable} ${bricolage.variable} ${playfair.variable}`}>
       <body className="antialiased">
         <CartProvider>
           <EntranceScreen />

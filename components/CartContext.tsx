@@ -14,6 +14,7 @@ export type CartItem = {
   qty: number;
   maxQty: number;
   categoryEmoji: string;
+  meetupLocations?: string[];
 };
 
 type CartContextType = {

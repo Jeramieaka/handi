@@ -28,103 +28,103 @@ const LISTINGS = [
     productName:"Pokémon Center Pikachu Plush (Large)", store:"Pokémon Center Mega Tokyo",
     category:"Collectibles", price:18, maxQty:3, categoryEmoji:"🧸",
     productImage:"https://images.unsplash.com/photo-1608889175523-6bebab82e69b?w=800&h=800&fit=crop&q=85",
-    delivery:["meetup","courier"] },
+    delivery:["meetup","courier"], meetupLocations:["Shinjuku Station South Exit","Shibuya Starbucks"] },
   { id:"t1-2", travelerEmoji:"🧔", travelerName:"James L.", travelerRating:5.0, travelerReviews:124, badge:"Top Carrier",
     from:"Tokyo", destinationRegion:"Worldwide" as DestRegion, date:"Apr 15",
     productName:"Eevee Exclusive Figure (Limited Ed.)", store:"Pokémon Center Mega Tokyo",
     category:"Collectibles", price:35, maxQty:2, categoryEmoji:"🎁",
     productImage:"https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=800&h=800&fit=crop&q=85",
-    delivery:["meetup","courier"] },
+    delivery:["meetup","courier"], meetupLocations:["Shinjuku Station South Exit","Shibuya Starbucks"] },
   { id:"t1-3", travelerEmoji:"🧔", travelerName:"James L.", travelerRating:5.0, travelerReviews:124, badge:"Top Carrier",
     from:"Tokyo", destinationRegion:"Worldwide" as DestRegion, date:"Apr 15",
     productName:"Seasonal KitKat Box (Matcha & Sakura)", store:"Tokyo Convenience",
     category:"Food & Snacks", price:14, maxQty:5, categoryEmoji:"🍫",
     productImage:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=800&fit=crop&q=85",
-    delivery:["meetup","courier"] },
+    delivery:["meetup","courier"], meetupLocations:["Shinjuku Station South Exit","Shibuya Starbucks"] },
   { id:"t6-1", travelerEmoji:"👩", travelerName:"Yuki H.", travelerRating:4.9, travelerReviews:68, badge:"Top Carrier",
     from:"Tokyo", destinationRegion:"Asia" as DestRegion, date:"Apr 25",
     productName:"Nintendo Switch Sports Bundle", store:"Nintendo Tokyo",
     category:"Collectibles", price:12, maxQty:2, categoryEmoji:"🎮",
     productImage:"https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=800&h=800&fit=crop&q=85",
-    delivery:["door","courier"] },
+    delivery:["door","courier"], meetupLocations:[] },
   { id:"t6-2", travelerEmoji:"👩", travelerName:"Yuki H.", travelerRating:4.9, travelerReviews:68, badge:"Top Carrier",
     from:"Tokyo", destinationRegion:"Asia" as DestRegion, date:"Apr 25",
     productName:"Hobonichi Techo Planner 2025", store:"Hobonichi Tokyo",
     category:"Books & Stationery", price:10, maxQty:4, categoryEmoji:"📓",
     productImage:"https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&h=800&fit=crop&q=85",
-    delivery:["door","courier"] },
+    delivery:["door","courier"], meetupLocations:[] },
   { id:"t2-1", travelerEmoji:"👩", travelerName:"Sarah K.", travelerRating:4.9, travelerReviews:87, badge:"Top Carrier",
     from:"New York", destinationRegion:"US" as DestRegion, date:"Apr 12",
     productName:"Levain Bakery Cookies (6-pack)", store:"Levain Bakery",
     category:"Food & Snacks", price:22, maxQty:4, categoryEmoji:"🍪",
     productImage:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&h=800&fit=crop&q=85",
-    delivery:["meetup","door"] },
+    delivery:["meetup","door"], meetupLocations:["Grand Central Terminal","Bryant Park"] },
   { id:"t2-2", travelerEmoji:"👩", travelerName:"Sarah K.", travelerRating:4.9, travelerReviews:87, badge:"Top Carrier",
     from:"New York", destinationRegion:"US" as DestRegion, date:"Apr 12",
     productName:"Kith × New Balance 550 (Size on request)", store:"Kith NYC",
     category:"Fashion", price:28, maxQty:1, categoryEmoji:"👟",
     productImage:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&h=800&fit=crop&q=85",
-    delivery:["meetup","door"] },
+    delivery:["meetup","door"], meetupLocations:["Grand Central Terminal","Bryant Park"] },
   { id:"t3-1", travelerEmoji:"🧑", travelerName:"Minho C.", travelerRating:4.8, travelerReviews:56, badge:null,
     from:"Seoul", destinationRegion:"Worldwide" as DestRegion, date:"Apr 18",
     productName:"COSRX Snail Mucin 96% Power Repairing Essence", store:"Olive Young",
     category:"Beauty", price:16, maxQty:5, categoryEmoji:"🧴",
     productImage:"https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&h=800&fit=crop&q=85",
-    delivery:["meetup","door","courier"] },
+    delivery:["meetup","door","courier"], meetupLocations:["Hongdae Station Exit 9","Gangnam COEX Mall"] },
   { id:"t3-2", travelerEmoji:"🧑", travelerName:"Minho C.", travelerRating:4.8, travelerReviews:56, badge:null,
     from:"Seoul", destinationRegion:"Worldwide" as DestRegion, date:"Apr 18",
     productName:"Beauty of Joseon Relief Sun SPF50+", store:"Olive Young",
     category:"Beauty", price:14, maxQty:5, categoryEmoji:"☀️",
     productImage:"https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=800&h=800&fit=crop&q=85",
-    delivery:["meetup","door","courier"] },
+    delivery:["meetup","door","courier"], meetupLocations:["Hongdae Station Exit 9","Gangnam COEX Mall"] },
   { id:"t3-3", travelerEmoji:"🧑", travelerName:"Minho C.", travelerRating:4.8, travelerReviews:56, badge:null,
     from:"Seoul", destinationRegion:"Worldwide" as DestRegion, date:"Apr 18",
     productName:"Gentle Monster Jennie Collab Sunglasses", store:"Gentle Monster Flagship",
     category:"Fashion", price:25, maxQty:1, categoryEmoji:"🕶️",
     productImage:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&h=800&fit=crop&q=85",
-    delivery:["meetup","door","courier"] },
+    delivery:["meetup","door","courier"], meetupLocations:["Hongdae Station Exit 9","Gangnam COEX Mall"] },
   { id:"t4-1", travelerEmoji:"👱", travelerName:"Elise M.", travelerRating:4.9, travelerReviews:43, badge:null,
     from:"Paris", destinationRegion:"Europe" as DestRegion, date:"Apr 20",
     productName:"Ladurée Macaron Box (12 pcs, assorted)", store:"Ladurée Champs-Élysées",
     category:"Food & Snacks", price:38, maxQty:3, categoryEmoji:"🥐",
     productImage:"https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=800&h=800&fit=crop&q=85",
-    delivery:["door","courier"] },
+    delivery:["door","courier"], meetupLocations:[] },
   { id:"t4-2", travelerEmoji:"👱", travelerName:"Elise M.", travelerRating:4.9, travelerReviews:43, badge:null,
     from:"Paris", destinationRegion:"Europe" as DestRegion, date:"Apr 20",
     productName:"Diptyque Baies Candle (190g)", store:"Diptyque Flagship",
     category:"Home & Gifts", price:30, maxQty:2, categoryEmoji:"🕯️",
     productImage:"https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=800&h=800&fit=crop&q=85",
-    delivery:["door","courier"] },
+    delivery:["door","courier"], meetupLocations:[] },
   { id:"t5-1", travelerEmoji:"🧓", travelerName:"Oliver T.", travelerRating:4.7, travelerReviews:31, badge:null,
     from:"London", destinationRegion:"Worldwide" as DestRegion, date:"Apr 22",
     productName:"Jellycat Bashful Bunny (Large, Cream)", store:"Harrods",
     category:"Home & Gifts", price:28, maxQty:3, categoryEmoji:"🐰",
     productImage:"https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&h=800&fit=crop&q=85",
-    delivery:["meetup","courier"] },
+    delivery:["meetup","courier"], meetupLocations:["Liverpool Street Station","Canary Wharf Café"] },
   { id:"t5-2", travelerEmoji:"🧓", travelerName:"Oliver T.", travelerRating:4.7, travelerReviews:31, badge:null,
     from:"London", destinationRegion:"Worldwide" as DestRegion, date:"Apr 22",
     productName:"Fortnum & Mason Earl Grey Tea (250g tin)", store:"Fortnum & Mason",
     category:"Food & Snacks", price:22, maxQty:4, categoryEmoji:"🍵",
     productImage:"https://images.unsplash.com/photo-1564890369478-c89ca3d9da7b?w=800&h=800&fit=crop&q=85",
-    delivery:["meetup","courier"] },
+    delivery:["meetup","courier"], meetupLocations:["Liverpool Street Station","Canary Wharf Café"] },
   { id:"t5-3", travelerEmoji:"🧓", travelerName:"Oliver T.", travelerRating:4.7, travelerReviews:31, badge:null,
     from:"London", destinationRegion:"Worldwide" as DestRegion, date:"Apr 22",
     productName:"Harrods Classic Shortbread Gift Tin", store:"Harrods",
     category:"Food & Snacks", price:24, maxQty:3, categoryEmoji:"🍪",
     productImage:"https://images.unsplash.com/photo-1499638673689-79a0b5115d87?w=800&h=800&fit=crop&q=85",
-    delivery:["meetup","courier"] },
+    delivery:["meetup","courier"], meetupLocations:["Liverpool Street Station","Canary Wharf Café"] },
   { id:"t8-1", travelerEmoji:"👩", travelerName:"Léa M.", travelerRating:5.0, travelerReviews:22, badge:"New",
     from:"Paris", destinationRegion:"Europe" as DestRegion, date:"May 2",
     productName:"Pierre Hermé Ispahan Macaron Box", store:"Pierre Hermé",
     category:"Food & Snacks", price:42, maxQty:2, categoryEmoji:"🥐",
     productImage:"https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&h=800&fit=crop&q=85",
-    delivery:["door"] },
+    delivery:["door"], meetupLocations:[] },
   { id:"t8-2", travelerEmoji:"👩", travelerName:"Léa M.", travelerRating:5.0, travelerReviews:22, badge:"New",
     from:"Paris", destinationRegion:"Europe" as DestRegion, date:"May 2",
     productName:"Dior Beauty Lip Glow Oil (limited shade)", store:"Sephora Paris",
     category:"Beauty", price:20, maxQty:2, categoryEmoji:"💄",
     productImage:"https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=800&fit=crop&q=85",
-    delivery:["door"] },
+    delivery:["door"], meetupLocations:[] },
 ];
 
 type Listing = typeof LISTINGS[0];
@@ -157,6 +157,16 @@ function ProductDetailModal({
   const remaining = product.maxQty-cartQty;
   const related   = LISTINGS.filter(l=>l.travelerName===product.travelerName&&l.id!==product.id);
 
+  // Parse departure date to compute days remaining
+  const daysUntil = (() => {
+    const months: Record<string,number> = { Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11 };
+    const [mon, day] = product.date.split(" ");
+    if (!mon || !day || !(mon in months)) return null;
+    const dep = new Date(new Date().getFullYear(), months[mon], parseInt(day));
+    const diff = Math.ceil((dep.getTime() - Date.now()) / 86400000);
+    return diff > 0 ? diff : null;
+  })();
+
   const handleAdd = () => {
     for (let n=0;n<qty;n++) {
       addItem({
@@ -164,6 +174,7 @@ function ProductDetailModal({
         travelerName:product.travelerName, travelerEmoji:product.travelerEmoji,
         from:product.from, date:product.date, price:product.price,
         maxQty:product.maxQty, categoryEmoji:product.categoryEmoji,
+        meetupLocations: product.meetupLocations,
       });
     }
     setAdded(true); setTimeout(()=>setAdded(false),2000); setQty(1);
@@ -217,6 +228,9 @@ function ProductDetailModal({
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-bold text-ink">{product.travelerName}</p>
                 <p className="text-xs text-muted">{product.from} · ✈️ {product.date}</p>
+                {daysUntil !== null && (
+                  <p className="text-[11px] font-semibold text-accent mt-0.5">Leaves in {daysUntil} day{daysUntil !== 1 ? "s" : ""} — order soon</p>
+                )}
               </div>
               <div className="flex items-center gap-1 flex-shrink-0">
                 <span className="text-amber-400">★</span>
@@ -232,12 +246,28 @@ function ProductDetailModal({
                 {product.delivery.map(d=>{
                   const m=DELIVERY_META[d];
                   return m ? (
-                    <div key={d} className="flex items-center gap-2.5 p-3 bg-warm rounded-xl border border-border">
-                      <span className="text-lg flex-shrink-0">{m.icon}</span>
-                      <div>
-                        <p className="text-xs font-bold text-ink">{m.label}</p>
-                        <p className="text-[10px] text-muted">{m.desc}</p>
+                    <div key={d} className="flex flex-col gap-1.5 p-3 bg-warm rounded-xl border border-border">
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg flex-shrink-0">{m.icon}</span>
+                        <div>
+                          <p className="text-xs font-bold text-ink">{m.label}</p>
+                          <p className="text-[10px] text-muted">{m.desc}</p>
+                        </div>
                       </div>
+                      {/* Meetup locations shown under meetup tile */}
+                      {d==="meetup" && product.meetupLocations && product.meetupLocations.length>0 && (
+                        <div className="pt-1.5 border-t border-border/60 flex flex-col gap-1">
+                          {product.meetupLocations.map(loc=>(
+                            <span key={loc} className="flex items-center gap-1 text-[10px] text-muted">
+                              <svg className="w-2.5 h-2.5 text-accent flex-shrink-0" fill="none" viewBox="0 0 12 12">
+                                <path d="M6 1C4.3 1 3 2.3 3 4c0 2.5 3 6 3 6s3-3.5 3-6c0-1.7-1.3-3-3-3z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                                <circle cx="6" cy="4" r="1" fill="currentColor"/>
+                              </svg>
+                              {loc}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ) : null;
                 })}
@@ -266,9 +296,18 @@ function ProductDetailModal({
                 <span className="text-sm font-semibold text-muted bg-white border border-border px-4 py-2.5 rounded-xl">Sold out</span>
               )}
             </div>
-            {remaining>0&&remaining<=2&&(
-              <p className="text-xs text-accent font-semibold -mt-4 mb-6">Only {remaining} left</p>
+            {remaining>0&&remaining<=3&&(
+              <p className="text-xs text-accent font-semibold -mt-4 mb-6">⚡ Only {remaining} left</p>
             )}
+
+            {/* Buyer protection */}
+            <div className="flex items-start gap-3 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl mb-6">
+              <span className="text-lg flex-shrink-0">🛡️</span>
+              <div>
+                <p className="text-xs font-bold text-emerald-700 mb-0.5">Buyer protection included</p>
+                <p className="text-[11px] text-emerald-600/80">Payment held in escrow — only released after you confirm receipt. 5-day dispute window.</p>
+              </div>
+            </div>
 
             {/* More from this traveler */}
             {related.length>0 && (
@@ -510,6 +549,17 @@ export default function BrowsePage() {
                   )}
                 </Link>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Trust bar */}
+        <div className="bg-ink/95 border-b border-white/8">
+          <div className="wrap">
+            <div className="flex items-center justify-center gap-6 sm:gap-10 py-2.5 flex-wrap">
+              {["🔒 Escrow payment — funds held until delivery", "✅ Buyer protection on every order", "💬 Dispute resolved within 24 hrs"].map(t => (
+                <span key={t} className="text-[11px] font-medium text-white/50 whitespace-nowrap">{t}</span>
+              ))}
             </div>
           </div>
         </div>

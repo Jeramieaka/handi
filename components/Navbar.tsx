@@ -19,6 +19,7 @@ export default function Navbar() {
   const [zip,       setZip]       = useState("");
   const [zipOpen,   setZipOpen]   = useState(false);
   const [zipInput,  setZipInput]  = useState("");
+  const [user,      setUser]      = useState<string | null>(null);
   const pathname = usePathname();
   const isDark   = pathname === "/" && !scrolled;
   const { totalItems } = useCart();
@@ -33,9 +34,13 @@ export default function Navbar() {
   useEffect(() => {
     const saved = sessionStorage.getItem("handi_zip");
     if (saved) setZip(saved);
+    const u = sessionStorage.getItem("handi_user");
+    if (u) setUser(u);
     const onStorage = () => {
       const z = sessionStorage.getItem("handi_zip");
       if (z) setZip(z);
+      const usr = sessionStorage.getItem("handi_user");
+      setUser(usr);
     };
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
@@ -74,10 +79,7 @@ export default function Navbar() {
   };
 
   return (
-    <motion.header
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1,  y: 0   }}
-      transition={{ duration: 0.6, ease: [0.22,1,0.36,1] }}
+    <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled || pathname !== "/"
           ? "bg-stone/95 backdrop-blur-xl border-b border-border"
@@ -190,13 +192,24 @@ export default function Navbar() {
               )}
             </AnimatePresence>
 
-            <Link href="/membership"
-              className={`text-sm font-medium transition-colors ${
-                isDark ? "text-white/60 hover:text-white" : "text-muted hover:text-ink"
-              }`}
-            >
-              Sign in
-            </Link>
+            {user ? (
+              <Link href="/membership" className="flex items-center gap-2 group">
+                <div className="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center text-accent font-black text-[13px] ring-2 ring-accent/20 group-hover:ring-accent/40 transition-all">
+                  {user[0]}
+                </div>
+                <span className={`text-sm font-semibold transition-colors ${isDark ? "text-white/80 group-hover:text-white" : "text-ink/80 group-hover:text-ink"}`}>
+                  {user}
+                </span>
+              </Link>
+            ) : (
+              <Link href="/signin"
+                className={`text-sm font-medium transition-colors ${
+                  isDark ? "text-white/60 hover:text-white" : "text-muted hover:text-ink"
+                }`}
+              >
+                Sign in
+              </Link>
+            )}
 
             {/* Cart icon */}
             <Link href="/cart" className="relative flex items-center justify-center w-9 h-9 rounded-full hover:bg-accent/10 transition-colors">
@@ -283,13 +296,19 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="flex gap-3 pt-4">
-                <Link href="/membership" className="btn-outline py-3 px-5 text-sm flex-1 justify-center">Sign in</Link>
+                {user ? (
+                  <Link href="/membership" className="btn-outline py-3 px-5 text-sm flex-1 justify-center">
+                    {user}
+                  </Link>
+                ) : (
+                  <Link href="/signin" className="btn-outline py-3 px-5 text-sm flex-1 justify-center">Sign in</Link>
+                )}
                 <Link href="/browse" className="btn-primary py-3 px-5 text-sm flex-1 justify-center">Get started</Link>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }

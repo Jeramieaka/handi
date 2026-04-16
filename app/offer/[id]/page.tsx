@@ -30,6 +30,8 @@ export default function OfferPage() {
   const offer = OFFERS.find(o => o.id === Number(id));
   const [requested, setRequested] = useState(false);
   const [item, setItem] = useState("");
+  const [budget, setBudget] = useState("");
+  const [notes, setNotes] = useState("");
 
   if (!offer) {
     return (
@@ -173,17 +175,24 @@ export default function OfferPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-muted mb-2 uppercase tracking-wide">Budget (USD)</label>
-                    <input
-                      type="number"
-                      placeholder="e.g. 50"
-                      className="w-full border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"
-                    />
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted text-sm font-medium">$</span>
+                      <input
+                        type="number"
+                        placeholder="e.g. 50"
+                        value={budget}
+                        onChange={e => setBudget(e.target.value)}
+                        className="w-full border border-border rounded-xl pl-8 pr-4 py-3 text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"
+                      />
+                    </div>
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-muted mb-2 uppercase tracking-wide">Notes (optional)</label>
                     <textarea
                       rows={3}
                       placeholder="Size, colour, specific edition…"
+                      value={notes}
+                      onChange={e => setNotes(e.target.value)}
                       className="w-full border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all resize-none"
                     />
                   </div>

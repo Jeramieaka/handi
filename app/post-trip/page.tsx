@@ -38,6 +38,7 @@ interface Product {
 interface F {
   from: string; to: string; toZip: string; date: string;
   products: Product[]; fee: number; note: string; delivery: string[];
+  meetupLocations: string[]; meetupInput: string;
 }
 
 const emptyProduct = (): Product => ({
@@ -51,6 +52,7 @@ export default function PostTripPage() {
   const [f, setF] = useState<F>({
     from:"", to:"", toZip:"", date:"",
     products:[emptyProduct()], fee:15, note:"", delivery:["meetup"],
+    meetupLocations:[], meetupInput:"",
   });
   const fileRefs = useRef<(HTMLInputElement|null)[]>([]);
 
@@ -87,6 +89,19 @@ export default function PostTripPage() {
         ? p.delivery.filter(d=>d!==method)
         : [...p.delivery, method],
     }));
+
+  const addMeetupLocation = () => {
+    const val = f.meetupInput.trim();
+    if (val && !f.meetupLocations.includes(val))
+      setF(p => ({ ...p, meetupLocations:[...p.meetupLocations, val], meetupInput:"" }));
+    else
+      setF(p => ({ ...p, meetupInput:"" }));
+  };
+  const removeMeetupLocation = (loc:string) =>
+    setF(p => ({ ...p, meetupLocations:p.meetupLocations.filter(l=>l!==loc) }));
+  const handleMeetupKey = (e:React.KeyboardEvent) => {
+    if (e.key==="Enter") { e.preventDefault(); addMeetupLocation(); }
+  };
 
   const canNext = () => {
     if (step===0) return f.from.trim() && (f.to||f.toZip) && f.date;
@@ -347,6 +362,65 @@ export default function PostTripPage() {
                         );
                       })}
                     </div>
+
+                    {/* Meetup locations — shown when meetup is selected */}
+                    <AnimatePresence>
+                      {f.delivery.includes("meetup") && (
+                        <motion.div
+                          key="meetup-locations"
+                          initial={{ opacity:0, height:0 }}
+                          animate={{ opacity:1, height:"auto" }}
+                          exit={{ opacity:0, height:0 }}
+                          transition={{ duration:0.25, ease:[0.22,1,0.36,1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-4 p-4 bg-white border border-border rounded-2xl">
+                            <p className="text-sm font-semibold text-ink mb-1">Meetup locations</p>
+                            <p className="text-xs text-muted mb-3">Add places you're comfortable meeting buyers — e.g. a café, MRT station, or neighbourhood.</p>
+
+                            {/* Existing location pills */}
+                            {f.meetupLocations.length > 0 && (
+                              <div className="flex flex-wrap gap-2 mb-3">
+                                {f.meetupLocations.map(loc => (
+                                  <span key={loc} className="flex items-center gap-1.5 bg-accent-light text-accent text-xs font-semibold px-3 py-1.5 rounded-full">
+                                    <svg className="w-3 h-3 opacity-60" fill="none" viewBox="0 0 12 12">
+                                      <path d="M6 1C4.3 1 3 2.3 3 4c0 2.5 3 6 3 6s3-3.5 3-6c0-1.7-1.3-3-3-3z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                                      <circle cx="6" cy="4" r="1" fill="currentColor"/>
+                                    </svg>
+                                    {loc}
+                                    <button onClick={()=>removeMeetupLocation(loc)} className="opacity-50 hover:opacity-100 ml-0.5 transition-opacity">
+                                      <svg className="w-3 h-3" fill="none" viewBox="0 0 12 12">
+                                        <path d="M2 2l8 8M10 2L2 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                                      </svg>
+                                    </button>
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+
+                            {/* Input */}
+                            <div className="flex gap-2">
+                              <input
+                                type="text"
+                                value={f.meetupInput}
+                                onChange={e=>setF({...f,meetupInput:e.target.value})}
+                                onKeyDown={handleMeetupKey}
+                                placeholder="e.g. Starbucks Shibuya, Exit 3"
+                                className="flex-1 border border-border rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"
+                              />
+                              <button
+                                type="button"
+                                onClick={addMeetupLocation}
+                                disabled={!f.meetupInput.trim()}
+                                className="px-4 py-2.5 rounded-xl bg-accent text-white text-sm font-semibold hover:bg-accent-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                              >
+                                Add
+                              </button>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                     {f.delivery.length===0 && (
                       <p className="text-xs text-red-500 mt-2">Please select at least one delivery method.</p>
                     )}
@@ -395,6 +469,22 @@ export default function PostTripPage() {
                         <span className="font-bold text-ink text-[15px]">{v}</span>
                       </div>
                     ))}
+                    {f.delivery.includes("meetup") && f.meetupLocations.length > 0 && (
+                      <div className="py-4">
+                        <span className="text-body text-muted block mb-2">Meetup locations</span>
+                        <div className="flex flex-wrap gap-2">
+                          {f.meetupLocations.map(loc => (
+                            <span key={loc} className="flex items-center gap-1.5 bg-accent-light text-accent text-xs font-semibold px-3 py-1.5 rounded-full">
+                              <svg className="w-3 h-3 opacity-60" fill="none" viewBox="0 0 12 12">
+                                <path d="M6 1C4.3 1 3 2.3 3 4c0 2.5 3 6 3 6s3-3.5 3-6c0-1.7-1.3-3-3-3z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                                <circle cx="6" cy="4" r="1" fill="currentColor"/>
+                              </svg>
+                              {loc}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <p className="text-xs font-black tracking-widest uppercase text-muted mb-4">Your listings ({f.products.length} items)</p>
