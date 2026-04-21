@@ -61,8 +61,8 @@ export default function Footer() {
             <p className="text-[11px] font-black uppercase tracking-widest text-white/25 mb-5">Account</p>
             <ul className="space-y-3.5">
               {[
-                { label: "Sign in", href: "/membership" },
-                { label: "Register", href: "/membership" },
+                { label: "Sign in", href: "/signin" },
+                { label: "Register", href: "/signup" },
                 { label: "Your cart", href: "/cart" },
                 { label: "Orders", href: "/membership" },
               ].map(l => (

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import EntranceScreen from "@/components/EntranceScreen";
+import ChatWidget from "@/components/ChatWidget";
 import { CartProvider } from "@/components/CartContext";
 
 const inter = Inter({
@@ -47,6 +48,7 @@ export default function RootLayout({
         <CartProvider>
           <EntranceScreen />
           {children}
+          <ChatWidget />
         </CartProvider>
       </body>
     </html>

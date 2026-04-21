@@ -4,7 +4,6 @@ import SixIconsSection     from "@/components/SixIconsSection";
 import CityScrollSection   from "@/components/CityScrollSection";
 import HowItWorks          from "@/components/HowItWorks";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import TrustStats          from "@/components/TrustStats";
 import CTASection          from "@/components/CTASection";
 import Footer              from "@/components/Footer";
 
@@ -14,11 +13,10 @@ export default function Home() {
       <main>
         <Navbar />
         <HeroSection />
-        <SixIconsSection />
         <CityScrollSection />
+        <SixIconsSection />
         <HowItWorks />
         <TestimonialsSection />
-        <TrustStats />
         <CTASection />
       </main>
       <Footer />

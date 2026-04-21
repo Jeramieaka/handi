@@ -24,19 +24,19 @@ const REGION_LABELS: Record<DestRegion,string> = {
 
 const LISTINGS = [
   { id:"t1-1", travelerEmoji:"🧔", travelerName:"James L.", travelerRating:5.0, travelerReviews:124, badge:"Top Carrier",
-    from:"Tokyo", destinationRegion:"Worldwide" as DestRegion, date:"Apr 15",
+    from:"Tokyo", destinationRegion:"Worldwide" as DestRegion, date:"May 8",
     productName:"Pokémon Center Pikachu Plush (Large)", store:"Pokémon Center Mega Tokyo",
     category:"Collectibles", price:18, maxQty:3, categoryEmoji:"🧸",
     productImage:"https://images.unsplash.com/photo-1608889175523-6bebab82e69b?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","courier"], meetupLocations:["Shinjuku Station South Exit","Shibuya Starbucks"] },
   { id:"t1-2", travelerEmoji:"🧔", travelerName:"James L.", travelerRating:5.0, travelerReviews:124, badge:"Top Carrier",
-    from:"Tokyo", destinationRegion:"Worldwide" as DestRegion, date:"Apr 15",
+    from:"Tokyo", destinationRegion:"Worldwide" as DestRegion, date:"May 8",
     productName:"Eevee Exclusive Figure (Limited Ed.)", store:"Pokémon Center Mega Tokyo",
     category:"Collectibles", price:35, maxQty:2, categoryEmoji:"🎁",
     productImage:"https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","courier"], meetupLocations:["Shinjuku Station South Exit","Shibuya Starbucks"] },
   { id:"t1-3", travelerEmoji:"🧔", travelerName:"James L.", travelerRating:5.0, travelerReviews:124, badge:"Top Carrier",
-    from:"Tokyo", destinationRegion:"Worldwide" as DestRegion, date:"Apr 15",
+    from:"Tokyo", destinationRegion:"Worldwide" as DestRegion, date:"May 8",
     productName:"Seasonal KitKat Box (Matcha & Sakura)", store:"Tokyo Convenience",
     category:"Food & Snacks", price:14, maxQty:5, categoryEmoji:"🍫",
     productImage:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=800&fit=crop&q=85",
@@ -54,43 +54,43 @@ const LISTINGS = [
     productImage:"https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&h=800&fit=crop&q=85",
     delivery:["door","courier"], meetupLocations:[] },
   { id:"t2-1", travelerEmoji:"👩", travelerName:"Sarah K.", travelerRating:4.9, travelerReviews:87, badge:"Top Carrier",
-    from:"New York", destinationRegion:"US" as DestRegion, date:"Apr 12",
+    from:"New York", destinationRegion:"US" as DestRegion, date:"May 2",
     productName:"Levain Bakery Cookies (6-pack)", store:"Levain Bakery",
     category:"Food & Snacks", price:22, maxQty:4, categoryEmoji:"🍪",
     productImage:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","door"], meetupLocations:["Grand Central Terminal","Bryant Park"] },
   { id:"t2-2", travelerEmoji:"👩", travelerName:"Sarah K.", travelerRating:4.9, travelerReviews:87, badge:"Top Carrier",
-    from:"New York", destinationRegion:"US" as DestRegion, date:"Apr 12",
+    from:"New York", destinationRegion:"US" as DestRegion, date:"May 2",
     productName:"Kith × New Balance 550 (Size on request)", store:"Kith NYC",
     category:"Fashion", price:28, maxQty:1, categoryEmoji:"👟",
     productImage:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","door"], meetupLocations:["Grand Central Terminal","Bryant Park"] },
   { id:"t3-1", travelerEmoji:"🧑", travelerName:"Minho C.", travelerRating:4.8, travelerReviews:56, badge:null,
-    from:"Seoul", destinationRegion:"Worldwide" as DestRegion, date:"Apr 18",
+    from:"Seoul", destinationRegion:"Worldwide" as DestRegion, date:"Apr 27",
     productName:"COSRX Snail Mucin 96% Power Repairing Essence", store:"Olive Young",
     category:"Beauty", price:16, maxQty:5, categoryEmoji:"🧴",
     productImage:"https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","door","courier"], meetupLocations:["Hongdae Station Exit 9","Gangnam COEX Mall"] },
   { id:"t3-2", travelerEmoji:"🧑", travelerName:"Minho C.", travelerRating:4.8, travelerReviews:56, badge:null,
-    from:"Seoul", destinationRegion:"Worldwide" as DestRegion, date:"Apr 18",
+    from:"Seoul", destinationRegion:"Worldwide" as DestRegion, date:"Apr 27",
     productName:"Beauty of Joseon Relief Sun SPF50+", store:"Olive Young",
     category:"Beauty", price:14, maxQty:5, categoryEmoji:"☀️",
     productImage:"https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","door","courier"], meetupLocations:["Hongdae Station Exit 9","Gangnam COEX Mall"] },
   { id:"t3-3", travelerEmoji:"🧑", travelerName:"Minho C.", travelerRating:4.8, travelerReviews:56, badge:null,
-    from:"Seoul", destinationRegion:"Worldwide" as DestRegion, date:"Apr 18",
+    from:"Seoul", destinationRegion:"Worldwide" as DestRegion, date:"Apr 27",
     productName:"Gentle Monster Jennie Collab Sunglasses", store:"Gentle Monster Flagship",
     category:"Fashion", price:25, maxQty:1, categoryEmoji:"🕶️",
     productImage:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","door","courier"], meetupLocations:["Hongdae Station Exit 9","Gangnam COEX Mall"] },
   { id:"t4-1", travelerEmoji:"👱", travelerName:"Elise M.", travelerRating:4.9, travelerReviews:43, badge:null,
-    from:"Paris", destinationRegion:"Europe" as DestRegion, date:"Apr 20",
+    from:"Paris", destinationRegion:"Europe" as DestRegion, date:"Apr 30",
     productName:"Ladurée Macaron Box (12 pcs, assorted)", store:"Ladurée Champs-Élysées",
     category:"Food & Snacks", price:38, maxQty:3, categoryEmoji:"🥐",
     productImage:"https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=800&h=800&fit=crop&q=85",
     delivery:["door","courier"], meetupLocations:[] },
   { id:"t4-2", travelerEmoji:"👱", travelerName:"Elise M.", travelerRating:4.9, travelerReviews:43, badge:null,
-    from:"Paris", destinationRegion:"Europe" as DestRegion, date:"Apr 20",
+    from:"Paris", destinationRegion:"Europe" as DestRegion, date:"Apr 30",
     productName:"Diptyque Baies Candle (190g)", store:"Diptyque Flagship",
     category:"Home & Gifts", price:30, maxQty:2, categoryEmoji:"🕯️",
     productImage:"https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=800&h=800&fit=crop&q=85",
@@ -239,6 +239,17 @@ function ProductDetailModal({
               </div>
             </div>
 
+            {/* Fee transparency */}
+            <div className="flex items-start gap-3 p-4 bg-amber-50 border border-amber-100 rounded-2xl mb-5">
+              <span className="text-base flex-shrink-0">💡</span>
+              <div>
+                <p className="text-xs font-bold text-amber-800 mb-0.5">How the fee works</p>
+                <p className="text-[11px] text-amber-800/75 leading-relaxed">
+                  This is the <strong>carry fee</strong> paid to your traveler. The item&apos;s retail price is paid separately at handoff. Your total = item price + this carry fee.
+                </p>
+              </div>
+            </div>
+
             {/* Delivery methods */}
             <div className="mb-6">
               <p className="text-xs font-black tracking-[0.16em] uppercase text-muted mb-3">Accepted delivery</p>
@@ -341,6 +352,14 @@ function ProductDetailModal({
 
 function ProductCard({ p, i, onView }: { p:Listing; i:number; onView:(p:Listing)=>void }) {
   const [imgError, setImgError] = useState(false);
+  const daysUntil = (() => {
+    const months: Record<string,number> = { Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11 };
+    const [mon, day] = p.date.split(" ");
+    if (!mon || !day || !(mon in months)) return null;
+    const dep = new Date(new Date().getFullYear(), months[mon], parseInt(day));
+    const diff = Math.ceil((dep.getTime() - Date.now()) / 86400000);
+    return diff > 0 ? diff : null;
+  })();
 
   return (
     <motion.div
@@ -377,7 +396,14 @@ function ProductCard({ p, i, onView }: { p:Listing; i:number; onView:(p:Listing)
           <span className="text-sm">{p.travelerEmoji}</span>
           <div className="flex-1 min-w-0">
             <p className="text-[12px] font-semibold text-ink truncate">{p.travelerName} · {p.from}</p>
-            <p className="text-[11px] text-muted">✈️ {p.date}</p>
+            <p className="text-[11px] text-muted flex items-center gap-1.5">
+              ✈️ {p.date}
+              {daysUntil !== null && (
+                <span className={`font-semibold ${daysUntil <= 5 ? "text-accent" : "text-muted"}`}>
+                  · {daysUntil}d left
+                </span>
+              )}
+            </p>
           </div>
           <div className="flex items-center gap-0.5 flex-shrink-0">
             <span className="text-amber-400 text-xs">★</span>
@@ -692,8 +718,11 @@ export default function BrowsePage() {
                     className="text-center py-32 text-muted">
                     <div className="text-6xl mb-5">🔍</div>
                     <p className="text-h1 text-ink font-bold mb-2">Nothing found</p>
-                    <p className="text-body mb-6">Try a different city, store, or category.</p>
-                    <button onClick={()=>setShowModal(true)} className="btn-primary px-8 py-3">Post a custom request</button>
+                    <p className="text-body mb-8">Try a different city, store, or category — or let travelers come to you.</p>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                      <button onClick={()=>setShowModal(true)} className="btn-primary px-8 py-3">Post a custom request</button>
+                      <Link href="/requests" className="btn-outline px-8 py-3">Browse buyer requests</Link>
+                    </div>
                   </motion.div>
                 ) : (
                   <motion.div key="grid" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}

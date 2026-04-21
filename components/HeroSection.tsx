@@ -149,6 +149,26 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
+          {/* Trust badges */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+            className="flex flex-wrap items-center gap-4 mb-8"
+          >
+            {[
+              { icon: "🔒", label: "Escrow payment" },
+              { icon: "🛡️", label: "Buyer protection" },
+              { icon: "✅", label: "ID-verified travelers" },
+              { icon: "⚡", label: "24h dispute resolution" },
+            ].map(b => (
+              <span key={b.label} className="flex items-center gap-1.5 text-[12px] font-medium text-white/40">
+                <span className="text-sm">{b.icon}</span>
+                {b.label}
+              </span>
+            ))}
+          </motion.div>
+
           {/* Social proof */}
           <motion.div
             initial={{ opacity: 0 }}

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 const BUYER = [
@@ -14,84 +15,87 @@ const TRAVELER = [
   { n:"03", icon:"💰", title:"Deliver & get paid",    body:"Complete the handoff. Buyer confirms. Your payment hits your account the same day." },
 ];
 
-export default function HowItWorks() {
-  return (
-    <section id="how-it-works" className="bg-ink border-t border-white/5 py-section">
-      <div className="wrap">
+const TABS = [
+  { label: "For Buyers",    icon: "🛒", steps: BUYER,    cta: "Start browsing →", href: "/browse"    },
+  { label: "For Travelers", icon: "✈️", steps: TRAVELER, cta: "Post your trip →", href: "/post-trip" },
+];
 
-        {/* Header */}
-        <div className="text-center mb-20">
-          <motion.p initial={{ opacity:0,y:12 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
-            transition={{ duration:0.5 }} className="eyebrow mb-5 text-accent">
+export default function HowItWorks() {
+  const [tab, setTab] = useState(0);
+  const col = TABS[tab];
+
+  return (
+    <section id="how-it-works" className="bg-ink border-t border-white/5 py-24 px-6">
+      <div className="max-w-3xl mx-auto">
+
+        <div className="text-center mb-12">
+          <motion.p initial={{ opacity:0, y:12 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+            transition={{ duration:0.5 }} className="eyebrow mb-4 text-accent">
             How it works
           </motion.p>
-          <motion.h2 initial={{ opacity:0,y:24 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
-            transition={{ duration:0.65, delay:0.1 }}
-            className="text-d2 font-black text-white text-balance">
+          <motion.h2 initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+            transition={{ duration:0.6, delay:0.1 }} className="text-d2 font-black text-white">
             Simple by design.
           </motion.h2>
-          <motion.p initial={{ opacity:0,y:16 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
-            transition={{ duration:0.55, delay:0.2 }}
-            className="mt-4 text-body-lg text-white/40 max-w-md mx-auto">
+          <motion.p initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }}
+            transition={{ duration:0.5, delay:0.2 }} className="mt-3 text-white/40 text-sm max-w-sm mx-auto">
             Buyer or traveler — the whole flow takes under 3 minutes.
           </motion.p>
         </div>
 
-        {/* Two columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          {[
-            { label:"For Buyers",    icon:"🛒", steps: BUYER,    cta: "Start browsing →", href: "/browse"     },
-            { label:"For Travelers", icon:"✈️", steps: TRAVELER, cta: "Post your trip →", href: "/post-trip"  },
-          ].map((col) => (
-            <motion.div key={col.label}
-              initial={{ opacity:0, y:32 }} whileInView={{ opacity:1, y:0 }}
-              viewport={{ once:true, margin:"-60px" }}
-              transition={{ duration:0.7, ease:[0.22,1,0.36,1] }}
-            >
-              {/* Column header */}
-              <div className="inline-flex items-center gap-2.5 bg-white/6 border border-white/10 rounded-full px-5 py-2.5 mb-10">
-                <span className="text-lg">{col.icon}</span>
-                <span className="text-sm font-bold text-white">{col.label}</span>
+        {/* Tabs */}
+        <div className="flex justify-center mb-10">
+          <div className="flex bg-white/6 rounded-full p-1 border border-white/10 gap-1">
+            {TABS.map((t, i) => (
+              <button
+                key={t.label}
+                onClick={() => setTab(i)}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${
+                  i === tab ? "bg-accent text-white shadow" : "text-white/50 hover:text-white"
+                }`}
+              >
+                <span>{t.icon}</span>{t.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Steps */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={tab}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="space-y-0"
+          >
+            {col.steps.map((s, i) => (
+              <div key={s.n} className="flex gap-6">
+                <div className="flex flex-col items-center">
+                  <div className="w-11 h-11 rounded-2xl bg-white/8 border border-white/10 flex items-center justify-center text-xl flex-shrink-0">
+                    {s.icon}
+                  </div>
+                  {i < col.steps.length - 1 && (
+                    <div className="w-px flex-1 bg-white/8 my-2 min-h-[2rem]" />
+                  )}
+                </div>
+                <div className="pb-8">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="text-[10px] font-black tracking-[0.25em] text-accent/60 uppercase">{s.n}</span>
+                    <h4 className="text-[16px] font-bold text-white">{s.title}</h4>
+                  </div>
+                  <p className="text-sm text-white/45 leading-relaxed">{s.body}</p>
+                </div>
               </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
-              {/* Steps */}
-              <div className="space-y-0">
-                {col.steps.map((s, i) => (
-                  <motion.div
-                    key={s.n}
-                    initial={{ opacity: 0, x: -18 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-40px" }}
-                    transition={{ duration: 0.6, delay: i * 0.15, ease: [0.22,1,0.36,1] }}
-                    className="flex gap-6 group"
-                  >
-                    {/* Left: number + line */}
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-10 rounded-2xl bg-white/8 border border-white/10 flex items-center justify-center text-xl flex-shrink-0">
-                        {s.icon}
-                      </div>
-                      {i < col.steps.length - 1 && (
-                        <div className="w-px flex-1 bg-white/8 my-2 min-h-[2rem]" />
-                      )}
-                    </div>
-
-                    {/* Right: text */}
-                    <div className="pb-10">
-                      <div className="flex items-center gap-2.5 mb-2">
-                        <span className="text-[10px] font-black tracking-[0.25em] text-accent/60 uppercase">{s.n}</span>
-                        <h4 className="text-h2 text-white">{s.title}</h4>
-                      </div>
-                      <p className="text-sm text-white/45 leading-relaxed max-w-[360px]">{s.body}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              <Link href={col.href} className="btn-ghost-white text-sm px-6 py-3">
-                {col.cta}
-              </Link>
-            </motion.div>
-          ))}
+        <div className="flex justify-center mt-2">
+          <Link href={col.href} className="btn-ghost-white text-sm px-7 py-3">
+            {col.cta}
+          </Link>
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -1015,11 +1016,18 @@ function OrdersTab({ orderFilter, setOrderFilter, openMessage }: {
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 export default function MembershipPage() {
+  const router = useRouter();
   const [tab, setTab] = useState<Tab>("Overview");
   const [messageConvId, setMessageConvId] = useState<string | undefined>(undefined);
   const [editProfileOpen, setEditProfileOpen] = useState(false);
   const [orderFilter, setOrderFilter] = useState<"All"|"Active"|"Delivered">("All");
   const [expandedReq, setExpandedReq] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("handi_user")) {
+      router.push("/signin");
+    }
+  }, [router]);
 
   const pendingCount = TRIPS.flatMap(t => t.orders).filter(o => o.status === "Pending").length;
   const unreadCount  = CONVERSATIONS.reduce((s, c) => s + c.unread, 0);

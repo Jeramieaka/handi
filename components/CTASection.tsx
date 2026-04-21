@@ -63,6 +63,23 @@ export default function CTASection() {
               className="mt-8 text-xs text-white/20">
               Free to join · No subscription fees · No hidden charges
             </motion.p>
+
+            {/* Stats strip */}
+            <motion.div initial={{ opacity:0, y:12 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+              transition={{ duration:0.5, delay:0.5 }}
+              className="mt-14 pt-10 border-t border-white/8 grid grid-cols-2 sm:grid-cols-4 gap-6">
+              {[
+                { value:"12,400+", label:"Orders completed" },
+                { value:"68",      label:"Cities worldwide" },
+                { value:"3,200+",  label:"Active travelers" },
+                { value:"4.9★",    label:"Average rating"  },
+              ].map(s => (
+                <div key={s.label} className="text-center">
+                  <p className="text-2xl font-black text-white tabular-nums">{s.value}</p>
+                  <p className="text-xs text-white/35 mt-1">{s.label}</p>
+                </div>
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>

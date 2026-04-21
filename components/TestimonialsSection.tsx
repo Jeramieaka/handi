@@ -24,46 +24,39 @@ const T = [
     quote: "As a frequent flyer, I've offset three months of airport lounges just from carry fees. The buyers are always polite and the escrow means zero payment stress.",
     name: "Priya N.", role: "Carrier · London", emoji: "🧑‍💼", rating: 5, route: "London → Mumbai",
   },
+  {
+    quote: "Got a limited Harrods Christmas tin that's impossible to ship internationally. My carrier brought it door-to-door from London in five days. Zero hassle, great condition.",
+    name: "Yuki T.", role: "Buyer · Osaka", emoji: "🧓", rating: 5, route: "London → Osaka",
+  },
 ];
 
 export default function TestimonialsSection() {
   const trackRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className="bg-stone border-t border-border py-section overflow-hidden">
+    <section className="bg-white border-t border-border py-section overflow-hidden">
       <div className="wrap mb-14">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-          <div>
-            <motion.p initial={{ opacity:0,y:12 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
-              transition={{ duration:0.5 }} className="eyebrow mb-5">
-              Real stories
-            </motion.p>
-            <div className="overflow-hidden">
-              <motion.h2
-                initial={{ y: "100%" }}
-                whileInView={{ y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.1, ease: [0.22,1,0.36,1] }}
-                className="text-d2 font-black text-ink"
-              >
-                People love handi.
-              </motion.h2>
-            </div>
+        <div className="text-center">
+          <motion.p initial={{ opacity:0,y:12 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
+            transition={{ duration:0.5 }} className="eyebrow mb-5">
+            Real stories
+          </motion.p>
+          <div className="overflow-hidden">
+            <motion.h2
+              initial={{ y: "100%" }}
+              whileInView={{ y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22,1,0.36,1] }}
+              className="text-d2 font-black text-ink"
+            >
+              People love handi.
+            </motion.h2>
           </div>
-          <motion.div initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }}
+          <motion.p initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }}
             transition={{ duration:0.5, delay:0.2 }}
-            className="flex items-center gap-4"
-          >
-            <div className="flex -space-x-3">
-              {["🧑","👩","🧔","👱","🧓"].map((e,i) => (
-                <span key={i} className="w-10 h-10 rounded-full bg-warm border-2 border-stone flex items-center justify-center text-lg shadow-sm">{e}</span>
-              ))}
-            </div>
-            <div>
-              <p className="font-bold text-ink text-[15px]">3,200+ travelers</p>
-              <p className="text-muted text-sm">68 cities worldwide</p>
-            </div>
-          </motion.div>
+            className="mt-3 text-muted text-sm max-w-sm mx-auto">
+            Real buyers and travelers — real results.
+          </motion.p>
         </div>
 
       </div>
