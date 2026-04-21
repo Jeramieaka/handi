@@ -24,102 +24,119 @@ const REGION_LABELS: Record<DestRegion,string> = {
 
 const LISTINGS = [
   { id:"t1-1", travelerEmoji:"🧔", travelerName:"James L.", travelerRating:5.0, travelerReviews:124, badge:"Top Carrier",
+    verified:true, completionRate:98, responseTime:"< 30 min",
     from:"Tokyo", destinationRegion:"Worldwide" as DestRegion, date:"May 8",
     productName:"Pokémon Center Pikachu Plush (Large)", store:"Pokémon Center Mega Tokyo",
     category:"Collectibles", price:18, maxQty:3, categoryEmoji:"🧸",
     productImage:"https://images.unsplash.com/photo-1608889175523-6bebab82e69b?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","courier"], meetupLocations:["Shinjuku Station South Exit","Shibuya Starbucks"] },
   { id:"t1-2", travelerEmoji:"🧔", travelerName:"James L.", travelerRating:5.0, travelerReviews:124, badge:"Top Carrier",
+    verified:true, completionRate:98, responseTime:"< 30 min",
     from:"Tokyo", destinationRegion:"Worldwide" as DestRegion, date:"May 8",
     productName:"Eevee Exclusive Figure (Limited Ed.)", store:"Pokémon Center Mega Tokyo",
     category:"Collectibles", price:35, maxQty:2, categoryEmoji:"🎁",
     productImage:"https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","courier"], meetupLocations:["Shinjuku Station South Exit","Shibuya Starbucks"] },
   { id:"t1-3", travelerEmoji:"🧔", travelerName:"James L.", travelerRating:5.0, travelerReviews:124, badge:"Top Carrier",
+    verified:true, completionRate:98, responseTime:"< 30 min",
     from:"Tokyo", destinationRegion:"Worldwide" as DestRegion, date:"May 8",
     productName:"Seasonal KitKat Box (Matcha & Sakura)", store:"Tokyo Convenience",
     category:"Food & Snacks", price:14, maxQty:5, categoryEmoji:"🍫",
     productImage:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","courier"], meetupLocations:["Shinjuku Station South Exit","Shibuya Starbucks"] },
   { id:"t6-1", travelerEmoji:"👩", travelerName:"Yuki H.", travelerRating:4.9, travelerReviews:68, badge:"Top Carrier",
+    verified:true, completionRate:95, responseTime:"< 1 hr",
     from:"Tokyo", destinationRegion:"Asia" as DestRegion, date:"Apr 25",
     productName:"Nintendo Switch Sports Bundle", store:"Nintendo Tokyo",
     category:"Collectibles", price:12, maxQty:2, categoryEmoji:"🎮",
     productImage:"https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=800&h=800&fit=crop&q=85",
     delivery:["door","courier"], meetupLocations:[] },
   { id:"t6-2", travelerEmoji:"👩", travelerName:"Yuki H.", travelerRating:4.9, travelerReviews:68, badge:"Top Carrier",
+    verified:true, completionRate:95, responseTime:"< 1 hr",
     from:"Tokyo", destinationRegion:"Asia" as DestRegion, date:"Apr 25",
     productName:"Hobonichi Techo Planner 2025", store:"Hobonichi Tokyo",
     category:"Books & Stationery", price:10, maxQty:4, categoryEmoji:"📓",
     productImage:"https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&h=800&fit=crop&q=85",
     delivery:["door","courier"], meetupLocations:[] },
   { id:"t2-1", travelerEmoji:"👩", travelerName:"Sarah K.", travelerRating:4.9, travelerReviews:87, badge:"Top Carrier",
+    verified:true, completionRate:97, responseTime:"< 30 min",
     from:"New York", destinationRegion:"US" as DestRegion, date:"May 2",
     productName:"Levain Bakery Cookies (6-pack)", store:"Levain Bakery",
     category:"Food & Snacks", price:22, maxQty:4, categoryEmoji:"🍪",
     productImage:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","door"], meetupLocations:["Grand Central Terminal","Bryant Park"] },
   { id:"t2-2", travelerEmoji:"👩", travelerName:"Sarah K.", travelerRating:4.9, travelerReviews:87, badge:"Top Carrier",
+    verified:true, completionRate:97, responseTime:"< 30 min",
     from:"New York", destinationRegion:"US" as DestRegion, date:"May 2",
     productName:"Kith × New Balance 550 (Size on request)", store:"Kith NYC",
     category:"Fashion", price:28, maxQty:1, categoryEmoji:"👟",
     productImage:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","door"], meetupLocations:["Grand Central Terminal","Bryant Park"] },
   { id:"t3-1", travelerEmoji:"🧑", travelerName:"Minho C.", travelerRating:4.8, travelerReviews:56, badge:null,
+    verified:false, completionRate:88, responseTime:"< 2 hrs",
     from:"Seoul", destinationRegion:"Worldwide" as DestRegion, date:"Apr 27",
     productName:"COSRX Snail Mucin 96% Power Repairing Essence", store:"Olive Young",
     category:"Beauty", price:16, maxQty:5, categoryEmoji:"🧴",
     productImage:"https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","door","courier"], meetupLocations:["Hongdae Station Exit 9","Gangnam COEX Mall"] },
   { id:"t3-2", travelerEmoji:"🧑", travelerName:"Minho C.", travelerRating:4.8, travelerReviews:56, badge:null,
+    verified:false, completionRate:88, responseTime:"< 2 hrs",
     from:"Seoul", destinationRegion:"Worldwide" as DestRegion, date:"Apr 27",
     productName:"Beauty of Joseon Relief Sun SPF50+", store:"Olive Young",
     category:"Beauty", price:14, maxQty:5, categoryEmoji:"☀️",
     productImage:"https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","door","courier"], meetupLocations:["Hongdae Station Exit 9","Gangnam COEX Mall"] },
   { id:"t3-3", travelerEmoji:"🧑", travelerName:"Minho C.", travelerRating:4.8, travelerReviews:56, badge:null,
+    verified:false, completionRate:88, responseTime:"< 2 hrs",
     from:"Seoul", destinationRegion:"Worldwide" as DestRegion, date:"Apr 27",
     productName:"Gentle Monster Jennie Collab Sunglasses", store:"Gentle Monster Flagship",
     category:"Fashion", price:25, maxQty:1, categoryEmoji:"🕶️",
     productImage:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","door","courier"], meetupLocations:["Hongdae Station Exit 9","Gangnam COEX Mall"] },
   { id:"t4-1", travelerEmoji:"👱", travelerName:"Elise M.", travelerRating:4.9, travelerReviews:43, badge:null,
+    verified:false, completionRate:91, responseTime:"< 1 hr",
     from:"Paris", destinationRegion:"Europe" as DestRegion, date:"Apr 30",
     productName:"Ladurée Macaron Box (12 pcs, assorted)", store:"Ladurée Champs-Élysées",
     category:"Food & Snacks", price:38, maxQty:3, categoryEmoji:"🥐",
     productImage:"https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=800&h=800&fit=crop&q=85",
     delivery:["door","courier"], meetupLocations:[] },
   { id:"t4-2", travelerEmoji:"👱", travelerName:"Elise M.", travelerRating:4.9, travelerReviews:43, badge:null,
+    verified:false, completionRate:91, responseTime:"< 1 hr",
     from:"Paris", destinationRegion:"Europe" as DestRegion, date:"Apr 30",
     productName:"Diptyque Baies Candle (190g)", store:"Diptyque Flagship",
     category:"Home & Gifts", price:30, maxQty:2, categoryEmoji:"🕯️",
     productImage:"https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=800&h=800&fit=crop&q=85",
     delivery:["door","courier"], meetupLocations:[] },
   { id:"t5-1", travelerEmoji:"🧓", travelerName:"Oliver T.", travelerRating:4.7, travelerReviews:31, badge:null,
+    verified:false, completionRate:85, responseTime:"< 2 hrs",
     from:"London", destinationRegion:"Worldwide" as DestRegion, date:"Apr 22",
     productName:"Jellycat Bashful Bunny (Large, Cream)", store:"Harrods",
     category:"Home & Gifts", price:28, maxQty:3, categoryEmoji:"🐰",
     productImage:"https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","courier"], meetupLocations:["Liverpool Street Station","Canary Wharf Café"] },
   { id:"t5-2", travelerEmoji:"🧓", travelerName:"Oliver T.", travelerRating:4.7, travelerReviews:31, badge:null,
+    verified:false, completionRate:85, responseTime:"< 2 hrs",
     from:"London", destinationRegion:"Worldwide" as DestRegion, date:"Apr 22",
     productName:"Fortnum & Mason Earl Grey Tea (250g tin)", store:"Fortnum & Mason",
     category:"Food & Snacks", price:22, maxQty:4, categoryEmoji:"🍵",
     productImage:"https://images.unsplash.com/photo-1564890369478-c89ca3d9da7b?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","courier"], meetupLocations:["Liverpool Street Station","Canary Wharf Café"] },
   { id:"t5-3", travelerEmoji:"🧓", travelerName:"Oliver T.", travelerRating:4.7, travelerReviews:31, badge:null,
+    verified:false, completionRate:85, responseTime:"< 2 hrs",
     from:"London", destinationRegion:"Worldwide" as DestRegion, date:"Apr 22",
     productName:"Harrods Classic Shortbread Gift Tin", store:"Harrods",
     category:"Food & Snacks", price:24, maxQty:3, categoryEmoji:"🍪",
     productImage:"https://images.unsplash.com/photo-1499638673689-79a0b5115d87?w=800&h=800&fit=crop&q=85",
     delivery:["meetup","courier"], meetupLocations:["Liverpool Street Station","Canary Wharf Café"] },
   { id:"t8-1", travelerEmoji:"👩", travelerName:"Léa M.", travelerRating:5.0, travelerReviews:22, badge:"New",
+    verified:true, completionRate:100, responseTime:"< 1 hr",
     from:"Paris", destinationRegion:"Europe" as DestRegion, date:"May 2",
     productName:"Pierre Hermé Ispahan Macaron Box", store:"Pierre Hermé",
     category:"Food & Snacks", price:42, maxQty:2, categoryEmoji:"🥐",
     productImage:"https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&h=800&fit=crop&q=85",
     delivery:["door"], meetupLocations:[] },
   { id:"t8-2", travelerEmoji:"👩", travelerName:"Léa M.", travelerRating:5.0, travelerReviews:22, badge:"New",
+    verified:true, completionRate:100, responseTime:"< 1 hr",
     from:"Paris", destinationRegion:"Europe" as DestRegion, date:"May 2",
     productName:"Dior Beauty Lip Glow Oil (limited shade)", store:"Sephora Paris",
     category:"Beauty", price:20, maxQty:2, categoryEmoji:"💄",
@@ -129,8 +146,8 @@ const LISTINGS = [
 
 type Listing = typeof LISTINGS[0];
 
-const CITIES  = ["All","Tokyo","New York","Seoul","Paris","London"];
-const STORES  = ["All stores",...Array.from(new Set(LISTINGS.map(l=>l.store))).sort()];
+const CITIES = ["All","Tokyo","New York","Seoul","Paris","London"];
+const STORES = ["All stores",...Array.from(new Set(LISTINGS.map(l=>l.store))).sort()];
 
 function detectRegion(zip:string): DestRegion|null {
   if (!zip) return null;
@@ -142,14 +159,21 @@ function detectRegion(zip:string): DestRegion|null {
   return null;
 }
 
+function parseDepartDate(dateStr: string): number {
+  const months: Record<string,number> = { Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11 };
+  const [mon, day] = dateStr.split(" ");
+  if (!mon || !day || !(mon in months)) return Infinity;
+  return new Date(new Date().getFullYear(), months[mon], parseInt(day)).getTime();
+}
+
 /* ─── Product Detail Modal ──────────────────────────────────── */
 
 function ProductDetailModal({
   product, onClose, onViewRelated,
 }: { product: Listing; onClose: ()=>void; onViewRelated: (p:Listing)=>void }) {
   const { addItem, items } = useCart();
-  const [qty,   setQty]   = useState(1);
-  const [added, setAdded] = useState(false);
+  const [qty,      setQty]      = useState(1);
+  const [added,    setAdded]    = useState(false);
   const [imgError, setImgError] = useState(false);
 
   const inCart    = items.find(it=>it.id===product.id);
@@ -157,13 +181,8 @@ function ProductDetailModal({
   const remaining = product.maxQty-cartQty;
   const related   = LISTINGS.filter(l=>l.travelerName===product.travelerName&&l.id!==product.id);
 
-  // Parse departure date to compute days remaining
   const daysUntil = (() => {
-    const months: Record<string,number> = { Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11 };
-    const [mon, day] = product.date.split(" ");
-    if (!mon || !day || !(mon in months)) return null;
-    const dep = new Date(new Date().getFullYear(), months[mon], parseInt(day));
-    const diff = Math.ceil((dep.getTime() - Date.now()) / 86400000);
+    const diff = Math.ceil((parseDepartDate(product.date) - Date.now()) / 86400000);
     return diff > 0 ? diff : null;
   })();
 
@@ -205,7 +224,6 @@ function ProductDetailModal({
           {product.badge && (
             <span className={`absolute top-4 left-4 ${product.badge==="New"?"badge-green":"badge-orange"}`}>{product.badge}</span>
           )}
-          {/* Close */}
           <button onClick={onClose}
             className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-ink text-xl shadow-card hover:bg-white transition-colors">
             ×
@@ -216,7 +234,6 @@ function ProductDetailModal({
         <div className="flex-1 overflow-y-auto">
           <div className="p-6 sm:p-7">
 
-            {/* Store + name */}
             <p className="text-[11px] font-semibold text-muted uppercase tracking-wider mb-1.5">{product.store}</p>
             <h2 className="text-xl font-black text-ink leading-snug mb-5">{product.productName}</h2>
 
@@ -226,16 +243,25 @@ function ProductDetailModal({
                 {product.travelerEmoji}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold text-ink">{product.travelerName}</p>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <p className="text-sm font-bold text-ink">{product.travelerName}</p>
+                  {product.verified && (
+                    <span className="text-[9px] font-black bg-blue-50 text-blue-600 border border-blue-100 px-1.5 py-0.5 rounded-full">✓ ID Verified</span>
+                  )}
+                </div>
                 <p className="text-xs text-muted">{product.from} · ✈️ {product.date}</p>
                 {daysUntil !== null && (
-                  <p className="text-[11px] font-semibold text-accent mt-0.5">Leaves in {daysUntil} day{daysUntil !== 1 ? "s" : ""} — order soon</p>
+                  <p className="text-[11px] font-semibold text-accent mt-0.5">Leaves in {daysUntil} day{daysUntil!==1?"s":""} — order soon</p>
                 )}
               </div>
-              <div className="flex items-center gap-1 flex-shrink-0">
-                <span className="text-amber-400">★</span>
-                <span className="text-sm font-bold text-ink">{product.travelerRating}</span>
-                <span className="text-xs text-muted">({product.travelerReviews})</span>
+              <div className="flex flex-col items-end gap-0.5 flex-shrink-0 text-right">
+                <div className="flex items-center gap-1">
+                  <span className="text-amber-400">★</span>
+                  <span className="text-sm font-bold text-ink">{product.travelerRating}</span>
+                  <span className="text-xs text-muted">({product.travelerReviews})</span>
+                </div>
+                <span className="text-[10px] text-muted">{product.completionRate}% completion</span>
+                <span className="text-[10px] text-muted">Replies {product.responseTime}</span>
               </div>
             </div>
 
@@ -245,7 +271,7 @@ function ProductDetailModal({
               <div>
                 <p className="text-xs font-bold text-amber-800 mb-0.5">How the fee works</p>
                 <p className="text-[11px] text-amber-800/75 leading-relaxed">
-                  This is the <strong>carry fee</strong> paid to your traveler. The item&apos;s retail price is paid separately at handoff. Your total = item price + this carry fee.
+                  This is the <strong>carry fee</strong> paid to your traveler. The item&apos;s retail price is paid separately at handoff. Your total = item retail price + this carry fee.
                 </p>
               </div>
             </div>
@@ -265,7 +291,6 @@ function ProductDetailModal({
                           <p className="text-[10px] text-muted">{m.desc}</p>
                         </div>
                       </div>
-                      {/* Meetup locations shown under meetup tile */}
                       {d==="meetup" && product.meetupLocations && product.meetupLocations.length>0 && (
                         <div className="pt-1.5 border-t border-border/60 flex flex-col gap-1">
                           {product.meetupLocations.map(loc=>(
@@ -290,6 +315,7 @@ function ProductDetailModal({
               <div className="flex-1">
                 <p className="text-xs text-muted mb-0.5">Carry fee</p>
                 <p className="text-2xl font-black text-ink">${product.price}</p>
+                <p className="text-[10px] text-muted mt-0.5">+ item retail price at handoff</p>
               </div>
               {remaining>0 ? (
                 <div className="flex items-center gap-2">
@@ -308,7 +334,7 @@ function ProductDetailModal({
               )}
             </div>
             {remaining>0&&remaining<=3&&(
-              <p className="text-xs text-accent font-semibold -mt-4 mb-6">⚡ Only {remaining} left</p>
+              <p className="text-xs text-accent font-semibold -mt-4 mb-6">⚡ Only {remaining} slot{remaining!==1?"s":""} left</p>
             )}
 
             {/* Buyer protection */}
@@ -334,7 +360,7 @@ function ProductDetailModal({
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-semibold text-ink leading-snug line-clamp-2 group-hover:text-accent transition-colors">{rel.productName}</p>
-                        <p className="text-xs font-bold text-accent mt-0.5">${rel.price}</p>
+                        <p className="text-[10px] text-muted mt-0.5">Carry fee · <span className="font-bold text-accent">${rel.price}</span></p>
                       </div>
                     </button>
                   ))}
@@ -348,16 +374,12 @@ function ProductDetailModal({
   );
 }
 
-/* ─── Product Card (simplified) ─────────────────────────────── */
+/* ─── Product Card ───────────────────────────────────────────── */
 
 function ProductCard({ p, i, onView }: { p:Listing; i:number; onView:(p:Listing)=>void }) {
   const [imgError, setImgError] = useState(false);
   const daysUntil = (() => {
-    const months: Record<string,number> = { Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11 };
-    const [mon, day] = p.date.split(" ");
-    if (!mon || !day || !(mon in months)) return null;
-    const dep = new Date(new Date().getFullYear(), months[mon], parseInt(day));
-    const diff = Math.ceil((dep.getTime() - Date.now()) / 86400000);
+    const diff = Math.ceil((parseDepartDate(p.date) - Date.now()) / 86400000);
     return diff > 0 ? diff : null;
   })();
 
@@ -372,38 +394,41 @@ function ProductCard({ p, i, onView }: { p:Listing; i:number; onView:(p:Listing)
       className="bg-white rounded-2xl overflow-hidden cursor-pointer flex flex-col"
     >
       {/* Image */}
-      <div className="relative h-48 flex-shrink-0 overflow-hidden bg-warm">
+      <div className="relative h-44 flex-shrink-0 overflow-hidden bg-warm">
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="text-[5rem] leading-none select-none opacity-55">{p.categoryEmoji}</span>
         </div>
         {!imgError && (
           <img src={p.productImage} alt={p.productName}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="absolute inset-0 w-full h-full object-cover"
             onError={()=>setImgError(true)}/>
         )}
         {p.badge && (
           <span className={`absolute top-3 left-3 z-10 ${p.badge==="New"?"badge-green":"badge-orange"}`}>{p.badge}</span>
+        )}
+        {p.maxQty <= 2 && (
+          <span className="absolute bottom-3 right-3 z-10 bg-black/70 text-white text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-sm">
+            ⚡ {p.maxQty} slot{p.maxQty!==1?"s":""} left
+          </span>
         )}
       </div>
 
       {/* Content */}
       <div className="p-4 flex flex-col flex-1">
         <p className="text-[10px] font-semibold text-muted uppercase tracking-wider mb-1">{p.store}</p>
-        <p className="text-[14px] font-bold text-ink leading-snug mb-auto line-clamp-2">{p.productName}</p>
+        <p className="text-[14px] font-bold text-ink leading-snug mb-3 line-clamp-2">{p.productName}</p>
 
         {/* Traveler row */}
-        <div className="flex items-center gap-2 mt-3 mb-3">
-          <span className="text-sm">{p.travelerEmoji}</span>
+        <div className="flex items-center gap-2 mb-1.5">
+          <span className="text-base leading-none flex-shrink-0">{p.travelerEmoji}</span>
           <div className="flex-1 min-w-0">
-            <p className="text-[12px] font-semibold text-ink truncate">{p.travelerName} · {p.from}</p>
-            <p className="text-[11px] text-muted flex items-center gap-1.5">
-              ✈️ {p.date}
-              {daysUntil !== null && (
-                <span className={`font-semibold ${daysUntil <= 5 ? "text-accent" : "text-muted"}`}>
-                  · {daysUntil}d left
-                </span>
+            <div className="flex items-center gap-1.5">
+              <p className="text-[12px] font-semibold text-ink truncate">{p.travelerName}</p>
+              {p.verified && (
+                <span className="text-[8px] font-black bg-blue-50 text-blue-600 border border-blue-100 px-1.5 py-0.5 rounded-full leading-none flex-shrink-0">✓ ID</span>
               )}
-            </p>
+            </div>
+            <p className="text-[11px] text-muted truncate">{p.from}</p>
           </div>
           <div className="flex items-center gap-0.5 flex-shrink-0">
             <span className="text-amber-400 text-xs">★</span>
@@ -411,9 +436,38 @@ function ProductCard({ p, i, onView }: { p:Listing; i:number; onView:(p:Listing)
           </div>
         </div>
 
-        {/* Price + View */}
-        <div className="flex items-center justify-between pt-3 border-t border-border/60">
-          <p className="text-[18px] font-black text-ink">${p.price}</p>
+        {/* Trust signals */}
+        <div className="flex items-center gap-2 mb-2.5 text-[10px] text-muted">
+          <span>{p.completionRate}% done</span>
+          <span className="w-px h-2.5 bg-border/60 flex-shrink-0" />
+          <span>⚡ {p.responseTime}</span>
+        </div>
+
+        {/* Departure + handoff icons */}
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-[11px] text-muted flex items-center gap-1 flex-wrap">
+            ✈️ {p.date}
+            {daysUntil !== null && (
+              <span className={`font-semibold ${daysUntil<=5?"text-accent":"text-muted"}`}>
+                · {daysUntil}d left
+              </span>
+            )}
+          </p>
+          <div className="flex items-center gap-1 flex-shrink-0">
+            {p.delivery.map(d=>(
+              <span key={d} title={DELIVERY_META[d]?.label} className="text-sm leading-none">
+                {DELIVERY_META[d]?.icon}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Price row */}
+        <div className="flex items-end justify-between pt-3 border-t border-border/60 mt-auto">
+          <div>
+            <p className="text-[9px] font-black uppercase tracking-wider text-muted mb-0.5">Carry fee</p>
+            <p className="text-[18px] font-black text-ink leading-none">${p.price}</p>
+          </div>
           <span className="text-xs font-semibold text-accent flex items-center gap-1">
             View details
             <svg className="w-3 h-3" fill="none" viewBox="0 0 12 12">
@@ -452,7 +506,7 @@ function PostRequestModal({ onClose }: { onClose:()=>void }) {
         <div className="flex items-center justify-between mb-7">
           <div>
             <h2 className="text-h1 font-bold text-ink">Post a custom request</h2>
-            <p className="text-sm text-muted mt-1">Can't find what you need? Let travelers come to you.</p>
+            <p className="text-sm text-muted mt-1">Can&apos;t find what you need? Let travelers come to you.</p>
           </div>
           <button onClick={onClose} className="w-9 h-9 rounded-full bg-warm flex items-center justify-center text-muted hover:text-ink transition-colors text-xl flex-shrink-0 ml-4">×</button>
         </div>
@@ -507,14 +561,17 @@ function PostRequestModal({ onClose }: { onClose:()=>void }) {
 
 export default function BrowsePage() {
   const { totalItems } = useCart();
-  const [category,   setCategory]   = useState("All");
-  const [city,       setCity]       = useState("All");
-  const [store,      setStore]      = useState("All stores");
-  const [query,      setQuery]      = useState("");
-  const [nearMe,     setNearMe]     = useState(false);
-  const [userZip,    setUserZip]    = useState("");
-  const [showModal,  setShowModal]  = useState(false);
-  const [selected,   setSelected]   = useState<Listing|null>(null);
+  const [category,  setCategory]  = useState("All");
+  const [city,      setCity]      = useState("All");
+  const [store,     setStore]     = useState("All stores");
+  const [query,     setQuery]     = useState("");
+  const [nearMe,    setNearMe]    = useState(false);
+  const [userZip,   setUserZip]   = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [selected,  setSelected]  = useState<Listing|null>(null);
+  const [sortBy,    setSortBy]    = useState<"soonest"|"fee-low"|"fee-high"|"rating">("soonest");
+  const [maxFee,    setMaxFee]    = useState<number|null>(null);
+  const [minRating, setMinRating] = useState<number|null>(null);
 
   useEffect(() => {
     const z = sessionStorage.getItem("handi_zip")||"";
@@ -527,15 +584,24 @@ export default function BrowsePage() {
   const userRegion = detectRegion(userZip);
 
   const filtered = LISTINGS.filter(p => {
-    const catOk   = category==="All"||p.category===category;
-    const cityOk  = city==="All"||p.from===city;
-    const storeOk = store==="All stores"||p.store===store;
-    const qOk     = !query||[p.productName,p.store,p.travelerName,p.from].some(s=>s.toLowerCase().includes(query.toLowerCase()));
-    const nearOk  = !nearMe||!userRegion||p.destinationRegion==="Worldwide"||p.destinationRegion===userRegion;
-    return catOk&&cityOk&&storeOk&&qOk&&nearOk;
+    const catOk    = category==="All"||p.category===category;
+    const cityOk   = city==="All"||p.from===city;
+    const storeOk  = store==="All stores"||p.store===store;
+    const qOk      = !query||[p.productName,p.store,p.travelerName,p.from].some(s=>s.toLowerCase().includes(query.toLowerCase()));
+    const nearOk   = !nearMe||!userRegion||p.destinationRegion==="Worldwide"||p.destinationRegion===userRegion;
+    const feeOk    = maxFee===null||p.price<=maxFee;
+    const ratingOk = minRating===null||p.travelerRating>=minRating;
+    return catOk&&cityOk&&storeOk&&qOk&&nearOk&&feeOk&&ratingOk;
   });
 
-  const hasActiveFilters = nearMe||city!=="All"||store!=="All stores";
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortBy==="fee-low")  return a.price - b.price;
+    if (sortBy==="fee-high") return b.price - a.price;
+    if (sortBy==="rating")   return b.travelerRating - a.travelerRating;
+    return parseDepartDate(a.date) - parseDepartDate(b.date);
+  });
+
+  const hasActiveFilters = nearMe||city!=="All"||store!=="All stores"||maxFee!==null||minRating!==null;
 
   return (
     <>
@@ -609,6 +675,7 @@ export default function BrowsePage() {
 
             {/* Sidebar */}
             <aside className="lg:w-[220px] flex-shrink-0 space-y-7">
+
               {/* Search */}
               <div className="relative">
                 <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" fill="none" viewBox="0 0 16 16">
@@ -617,6 +684,48 @@ export default function BrowsePage() {
                 </svg>
                 <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search…"
                   className="w-full pl-9 pr-4 py-3 text-sm bg-white border border-border rounded-xl focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"/>
+              </div>
+
+              {/* Sort */}
+              <div>
+                <p className="text-xs font-black tracking-[0.18em] uppercase text-muted mb-3">Sort by</p>
+                <select value={sortBy} onChange={e=>setSortBy(e.target.value as typeof sortBy)}
+                  className="w-full border border-border rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all text-ink">
+                  <option value="soonest">Soonest departure</option>
+                  <option value="fee-low">Carry fee: low → high</option>
+                  <option value="fee-high">Carry fee: high → low</option>
+                  <option value="rating">Highest rated</option>
+                </select>
+              </div>
+
+              {/* Max carry fee */}
+              <div>
+                <p className="text-xs font-black tracking-[0.18em] uppercase text-muted mb-3">Max carry fee</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {([null, 15, 25, 40] as (number|null)[]).map(f=>(
+                    <button key={f??-1} onClick={()=>setMaxFee(f)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                        maxFee===f?"bg-accent text-white":"bg-white border border-border text-muted hover:text-ink hover:border-accent/40"
+                      }`}>
+                      {f===null?"Any":`≤ $${f}`}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Min rating */}
+              <div>
+                <p className="text-xs font-black tracking-[0.18em] uppercase text-muted mb-3">Min rating</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {([null, 4.8, 4.9] as (number|null)[]).map(r=>(
+                    <button key={r??-1} onClick={()=>setMinRating(r)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                        minRating===r?"bg-accent text-white":"bg-white border border-border text-muted hover:text-ink hover:border-accent/40"
+                      }`}>
+                      {r===null?"All":`${r}+ ★`}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Near me */}
@@ -657,7 +766,7 @@ export default function BrowsePage() {
               <div>
                 <p className="text-xs font-black tracking-[0.18em] uppercase text-muted mb-3">Store</p>
                 <select value={store} onChange={e=>setStore(e.target.value)}
-                  className="w-full border border-border rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all appearance-none text-ink">
+                  className="w-full border border-border rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all text-ink">
                   {STORES.map(s=><option key={s}>{s}</option>)}
                 </select>
                 {store!=="All stores" && (
@@ -667,7 +776,7 @@ export default function BrowsePage() {
 
               {/* Can't find it */}
               <div className="card p-5 border-accent/20 bg-accent-light">
-                <p className="text-xs font-black text-accent uppercase tracking-wider mb-2">Can't find it?</p>
+                <p className="text-xs font-black text-accent uppercase tracking-wider mb-2">Can&apos;t find it?</p>
                 <p className="text-sm text-muted mb-4">Post a custom request and let travelers come to you.</p>
                 <button onClick={()=>setShowModal(true)} className="btn-primary text-sm w-full justify-center py-2.5">Post request</button>
               </div>
@@ -675,6 +784,7 @@ export default function BrowsePage() {
 
             {/* Grid */}
             <div className="flex-1 min-w-0">
+
               {/* Active filter pills */}
               {hasActiveFilters && (
                 <div className="flex flex-wrap gap-2 mb-5">
@@ -696,14 +806,26 @@ export default function BrowsePage() {
                       <button onClick={()=>setStore("All stores")} className="text-muted hover:text-ink">×</button>
                     </span>
                   )}
-                  <button onClick={()=>{setNearMe(false);setCity("All");setStore("All stores");}}
+                  {maxFee!==null && (
+                    <span className="flex items-center gap-1.5 bg-warm border border-border text-ink text-xs font-semibold px-3 py-1.5 rounded-full">
+                      💰 ≤ ${maxFee} fee
+                      <button onClick={()=>setMaxFee(null)} className="text-muted hover:text-ink">×</button>
+                    </span>
+                  )}
+                  {minRating!==null && (
+                    <span className="flex items-center gap-1.5 bg-warm border border-border text-ink text-xs font-semibold px-3 py-1.5 rounded-full">
+                      ★ {minRating}+
+                      <button onClick={()=>setMinRating(null)} className="text-muted hover:text-ink">×</button>
+                    </span>
+                  )}
+                  <button onClick={()=>{setNearMe(false);setCity("All");setStore("All stores");setMaxFee(null);setMinRating(null);}}
                     className="text-xs text-muted hover:text-accent transition-colors px-1.5">Clear all</button>
                 </div>
               )}
 
               <div className="flex items-center justify-between mb-6">
                 <p className="text-sm text-muted">
-                  <span className="font-bold text-ink">{filtered.length}</span> items available
+                  <span className="font-bold text-ink">{sorted.length}</span> results
                 </p>
                 {totalItems>0 && (
                   <Link href="/cart" className="flex items-center gap-2 text-sm font-bold text-accent hover:underline">
@@ -713,7 +835,7 @@ export default function BrowsePage() {
               </div>
 
               <AnimatePresence mode="wait">
-                {filtered.length===0 ? (
+                {sorted.length===0 ? (
                   <motion.div key="empty" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
                     className="text-center py-32 text-muted">
                     <div className="text-6xl mb-5">🔍</div>
@@ -727,7 +849,7 @@ export default function BrowsePage() {
                 ) : (
                   <motion.div key="grid" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
                     className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-                    {filtered.map((p,i)=><ProductCard key={p.id} p={p} i={i} onView={setSelected}/>)}
+                    {sorted.map((p,i)=><ProductCard key={p.id} p={p} i={i} onView={setSelected}/>)}
                   </motion.div>
                 )}
               </AnimatePresence>

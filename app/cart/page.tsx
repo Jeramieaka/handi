@@ -28,13 +28,40 @@ export default function CartPage() {
 
         {totalItems === 0 ? (
           /* ── Empty state ── */
-          <div className="wrap py-32 flex flex-col items-center text-center">
-            <div className="w-20 h-20 rounded-3xl bg-white border border-border flex items-center justify-center text-4xl mb-8 shadow-soft">
-              🛍️
+          <div className="wrap py-16">
+            <div className="flex flex-col items-center text-center mb-16">
+              <div className="w-20 h-20 rounded-3xl bg-white border border-border flex items-center justify-center text-4xl mb-8 shadow-soft">
+                🛍️
+              </div>
+              <h2 className="text-2xl font-bold text-ink mb-3">Your cart is empty</h2>
+              <p className="text-muted mb-8 max-w-xs">Browse traveler offers and add items you want carried back for you.</p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link href="/browse" className="btn-primary px-10 py-4">Browse items</Link>
+                <Link href="/requests" className="btn-outline px-10 py-4">Post a custom request</Link>
+              </div>
             </div>
-            <h2 className="text-2xl font-bold text-ink mb-3">Your cart is empty</h2>
-            <p className="text-muted mb-10 max-w-xs">Browse traveler offers and add items you want carried back for you.</p>
-            <Link href="/browse" className="btn-primary px-10 py-4">Browse items</Link>
+
+            {/* Popular right now */}
+            <div>
+              <p className="text-[11px] font-black uppercase tracking-[0.18em] text-muted mb-6 text-center">Popular right now</p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+                {[
+                  { emoji:"🧸", name:"Pokémon Center Pikachu Plush", store:"Pokémon Center Tokyo", fee:18, route:"Tokyo → Worldwide" },
+                  { emoji:"🧴", name:"COSRX Snail Mucin Essence", store:"Olive Young Seoul", fee:16, route:"Seoul → Worldwide" },
+                  { emoji:"🥐", name:"Ladurée Macaron Box (12 pcs)", store:"Ladurée Champs-Élysées", fee:38, route:"Paris → Europe" },
+                ].map(item => (
+                  <Link key={item.name} href="/browse"
+                    className="flex gap-3 p-4 bg-white border border-border rounded-2xl hover:border-accent/30 hover:shadow-card transition-all group">
+                    <div className="w-12 h-12 rounded-xl bg-warm flex items-center justify-center text-2xl flex-shrink-0">{item.emoji}</div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[12px] font-bold text-ink leading-snug line-clamp-2 group-hover:text-accent transition-colors">{item.name}</p>
+                      <p className="text-[10px] text-muted mt-1">{item.route}</p>
+                      <p className="text-[11px] font-bold text-accent mt-0.5">Carry fee · ${item.fee}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         ) : (
           <div className="wrap py-12">
