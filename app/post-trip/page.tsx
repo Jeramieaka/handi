@@ -6,7 +6,16 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 
-const STEPS = ["Route", "Listings", "Options", "Publish"];
+const STEPS = ["From", "To", "Date", "Listings", "Options", "Publish"];
+const STEP_TIME = ["~10 sec", "~10 sec", "~10 sec", "~2 min", "~30 sec", "Ready!"];
+
+const CITY_FEE_HINT: Record<string, string> = {
+  Tokyo: "Typical on this route: $12–$22",
+  Seoul: "Typical on this route: $14–$20",
+  Paris: "Typical on this route: $22–$45",
+  "New York": "Typical on this route: $18–$30",
+  London: "Typical on this route: $20–$35",
+};
 
 const CATEGORY_EMOJIS: Record<string,string> = {
   "Fashion":"👟","Food & Snacks":"🍪","Beauty":"🧴","Collectibles":"🧸",
@@ -104,9 +113,11 @@ export default function PostTripPage() {
   };
 
   const canNext = () => {
-    if (step===0) return f.from.trim() && (f.to||f.toZip) && f.date;
-    if (step===1) return f.products.length>0 && f.products.every(p=>p.name.trim()&&p.store.trim()&&p.price>0);
-    if (step===2) return f.delivery.length>0;
+    if (step===0) return f.from.trim().length > 0;
+    if (step===1) return (f.to || f.toZip).trim().length > 0;
+    if (step===2) return f.date.length > 0;
+    if (step===3) return f.products.length>0 && f.products.every(p=>p.name.trim()&&p.store.trim()&&p.price>0);
+    if (step===4) return f.delivery.length>0;
     return true;
   };
 
@@ -142,7 +153,7 @@ export default function PostTripPage() {
 
         <div className="wrap max-w-[760px] py-12">
           {/* Stepper */}
-          <div className="flex items-center gap-0 mb-12">
+          <div className="flex items-center gap-0 mb-4">
             {STEPS.map((s,i) => (
               <div key={s} className="flex items-center flex-1 last:flex-none">
                 <div className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 transition-all duration-300 ${
@@ -155,52 +166,67 @@ export default function PostTripPage() {
               </div>
             ))}
           </div>
+          <p className="text-xs text-muted text-center mb-10">Step {step+1} of {STEPS.length} · {STEP_TIME[step]}</p>
 
           <div className="card p-10 shadow-card">
             <AnimatePresence mode="wait">
 
-              {/* ── Step 0: Route ── */}
+              {/* ── Step 0: Departure city ── */}
               {step===0 && (
                 <motion.div key="s0" initial={{opacity:0,x:24}} animate={{opacity:1,x:0}} exit={{opacity:0,x:-24}} transition={{duration:0.28}}>
-                  <h2 className="text-h1 font-bold text-ink mb-8">Where are you going?</h2>
-                  <div className="space-y-5">
-                    <div>
-                      <label className="block text-sm font-semibold text-muted mb-2">Departing from</label>
-                      <input
-                        type="text"
-                        value={f.from}
-                        onChange={e=>setF({...f,from:e.target.value})}
-                        placeholder="e.g. Tokyo, Seoul, Paris…"
-                        className="w-full border border-border rounded-2xl px-4 py-3.5 text-[15px] focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"
-                      />
-                      <p className="text-xs text-muted mt-2">Enter your departure city — we'll use this to match buyers near your route.</p>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-muted mb-2">Delivery destination (ZIP / postal code)</label>
-                      <input
-                        type="text"
-                        value={f.toZip}
-                        onChange={e=>setF({...f,toZip:e.target.value,to:e.target.value})}
-                        placeholder="e.g. 10001 or SW1A 1AA"
-                        className="w-full border border-border rounded-2xl px-4 py-3.5 text-[15px] focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"
-                      />
-                      <p className="text-xs text-muted mt-2">Enter a ZIP code, postal code, or city name.</p>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-muted mb-2">Travel date</label>
-                      <input type="date" value={f.date} onChange={e=>setF({...f,date:e.target.value})}
-                        className="w-full border border-border rounded-2xl px-4 py-3.5 text-[15px] focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"/>
-                    </div>
-                  </div>
+                  <h2 className="text-h1 font-bold text-ink mb-3">Where are you leaving from?</h2>
+                  <p className="text-body text-muted mb-8">We&apos;ll use this to match your listings with buyers on your route.</p>
+                  <input
+                    type="text"
+                    value={f.from}
+                    onChange={e=>setF({...f,from:e.target.value})}
+                    placeholder="e.g. Tokyo, Seoul, Paris…"
+                    autoFocus
+                    className="w-full border border-border rounded-2xl px-4 py-4 text-[16px] focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"
+                  />
+                  <p className="text-xs text-muted mt-3">City or region you&apos;re departing from</p>
                 </motion.div>
               )}
 
-              {/* ── Step 1: Listings ── */}
+              {/* ── Step 1: Destination ── */}
               {step===1 && (
+                <motion.div key="s1" initial={{opacity:0,x:24}} animate={{opacity:1,x:0}} exit={{opacity:0,x:-24}} transition={{duration:0.28}}>
+                  <h2 className="text-h1 font-bold text-ink mb-3">Where are you going?</h2>
+                  <p className="text-body text-muted mb-8">Buyers near your destination will be able to request items from you.</p>
+                  <input
+                    type="text"
+                    value={f.toZip}
+                    onChange={e=>setF({...f,toZip:e.target.value,to:e.target.value})}
+                    placeholder="e.g. New York, 10001, or SW1A 1AA"
+                    autoFocus
+                    className="w-full border border-border rounded-2xl px-4 py-4 text-[16px] focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"
+                  />
+                  <p className="text-xs text-muted mt-3">City name or ZIP / postal code</p>
+                </motion.div>
+              )}
+
+              {/* ── Step 2: Travel date ── */}
+              {step===2 && (
+                <motion.div key="s2" initial={{opacity:0,x:24}} animate={{opacity:1,x:0}} exit={{opacity:0,x:-24}} transition={{duration:0.28}}>
+                  <h2 className="text-h1 font-bold text-ink mb-3">When do you travel?</h2>
+                  <p className="text-body text-muted mb-8">Buyers will use this to decide whether your trip works for them.</p>
+                  <input
+                    type="date"
+                    value={f.date}
+                    onChange={e=>setF({...f,date:e.target.value})}
+                    autoFocus
+                    className="w-full border border-border rounded-2xl px-4 py-4 text-[16px] focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"
+                  />
+                  <p className="text-xs text-muted mt-3">Your actual travel or departure date</p>
+                </motion.div>
+              )}
+
+              {/* ── Step 3: Listings ── */}
+              {step===3 && (
                 <motion.div key="s1" initial={{opacity:0,x:24}} animate={{opacity:1,x:0}} exit={{opacity:0,x:-24}} transition={{duration:0.28}}>
                   <h2 className="text-h1 font-bold text-ink mb-2">List your items.</h2>
                   <p className="text-body text-muted mb-7">
-                    Add specific products you can carry from {f.from||"your city"}. Buyers will purchase these directly.
+                    Add products you can carry from {f.from||"your city"}. Buyers will purchase these directly.
                   </p>
 
                   <div className="space-y-5">
@@ -238,6 +264,9 @@ export default function PostTripPage() {
                             <input type="number" min={1} placeholder="e.g. 18"
                               value={prod.price||""} onChange={e=>updateProduct(i,"price",Number(e.target.value))}
                               className="w-full border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"/>
+                            {f.from && CITY_FEE_HINT[f.from] && (
+                              <p className="text-[11px] text-muted mt-1.5">💡 {CITY_FEE_HINT[f.from]}</p>
+                            )}
                           </div>
                           <div>
                             <label className="block text-xs font-semibold text-muted mb-1.5">Max quantity</label>
@@ -325,8 +354,8 @@ export default function PostTripPage() {
                 </motion.div>
               )}
 
-              {/* ── Step 2: Delivery options + notes ── */}
-              {step===2 && (
+              {/* ── Step 4: Delivery options + notes ── */}
+              {step===4 && (
                 <motion.div key="s2" initial={{opacity:0,x:24}} animate={{opacity:1,x:0}} exit={{opacity:0,x:-24}} transition={{duration:0.28}}>
                   <h2 className="text-h1 font-bold text-ink mb-2">Delivery & notes.</h2>
                   <p className="text-body text-muted mb-8">Choose how you're willing to hand off items, then add any notes for buyers.</p>
@@ -452,8 +481,8 @@ export default function PostTripPage() {
                 </motion.div>
               )}
 
-              {/* ── Step 3: Review ── */}
-              {step===3 && (
+              {/* ── Step 5: Review ── */}
+              {step===5 && (
                 <motion.div key="s3" initial={{opacity:0,x:24}} animate={{opacity:1,x:0}} exit={{opacity:0,x:-24}} transition={{duration:0.28}}>
                   <h2 className="text-h1 font-bold text-ink mb-8">Review & publish.</h2>
 
@@ -530,10 +559,10 @@ export default function PostTripPage() {
                 className={`btn-outline text-sm px-6 py-3 ${step===0?"invisible":""}`}>
                 Back
               </button>
-              {step<STEPS.length-1 ? (
+              {step < STEPS.length - 1 ? (
                 <button onClick={()=>setStep(s=>s+1)} disabled={!canNext()}
                   className="btn-primary text-sm px-8 py-3 disabled:opacity-40 disabled:cursor-not-allowed">
-                  Continue
+                  {step < 2 ? "Next →" : "Continue"}
                 </button>
               ) : (
                 <button onClick={()=>setDone(true)} className="btn-primary text-sm px-8 py-3">

@@ -378,10 +378,6 @@ function ProductDetailModal({
 
 function ProductCard({ p, i, onView }: { p:Listing; i:number; onView:(p:Listing)=>void }) {
   const [imgError, setImgError] = useState(false);
-  const daysUntil = (() => {
-    const diff = Math.ceil((parseDepartDate(p.date) - Date.now()) / 86400000);
-    return diff > 0 ? diff : null;
-  })();
 
   return (
     <motion.div
@@ -403,9 +399,13 @@ function ProductCard({ p, i, onView }: { p:Listing; i:number; onView:(p:Listing)
             className="absolute inset-0 w-full h-full object-cover"
             onError={()=>setImgError(true)}/>
         )}
-        {p.badge && (
-          <span className={`absolute top-3 left-3 z-10 ${p.badge==="New"?"badge-green":"badge-orange"}`}>{p.badge}</span>
-        )}
+        {p.badge === "Top Carrier" ? (
+          <span className="absolute top-3 left-3 z-10 badge-orange">Top Carrier</span>
+        ) : p.badge === "New" ? (
+          <span className="absolute top-3 left-3 z-10 badge-green">New</span>
+        ) : p.verified ? (
+          <span className="absolute top-3 left-3 z-10 text-[9px] font-black bg-blue-500 text-white px-2 py-0.5 rounded-full">✓ ID</span>
+        ) : null}
         {p.maxQty <= 2 && (
           <span className="absolute bottom-3 right-3 z-10 bg-black/70 text-white text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-sm">
             ⚡ {p.maxQty} slot{p.maxQty!==1?"s":""} left
@@ -415,59 +415,23 @@ function ProductCard({ p, i, onView }: { p:Listing; i:number; onView:(p:Listing)
 
       {/* Content */}
       <div className="p-4 flex flex-col flex-1">
-        <p className="text-[10px] font-semibold text-muted uppercase tracking-wider mb-1">{p.store}</p>
         <p className="text-[14px] font-bold text-ink leading-snug mb-3 line-clamp-2">{p.productName}</p>
 
         {/* Traveler row */}
-        <div className="flex items-center gap-2 mb-1.5">
+        <div className="flex items-center gap-2 mb-3">
           <span className="text-base leading-none flex-shrink-0">{p.travelerEmoji}</span>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-1.5">
-              <p className="text-[12px] font-semibold text-ink truncate">{p.travelerName}</p>
-              {p.verified && (
-                <span className="text-[8px] font-black bg-blue-50 text-blue-600 border border-blue-100 px-1.5 py-0.5 rounded-full leading-none flex-shrink-0">✓ ID</span>
-              )}
-            </div>
-            <p className="text-[11px] text-muted truncate">{p.from}</p>
-          </div>
+          <p className="text-[12px] text-muted truncate flex-1">{p.travelerName} · {p.from}</p>
           <div className="flex items-center gap-0.5 flex-shrink-0">
             <span className="text-amber-400 text-xs">★</span>
             <span className="text-xs font-semibold text-ink">{p.travelerRating}</span>
           </div>
         </div>
 
-        {/* Trust signals */}
-        <div className="flex items-center gap-2 mb-2.5 text-[10px] text-muted">
-          <span>{p.completionRate}% done</span>
-          <span className="w-px h-2.5 bg-border/60 flex-shrink-0" />
-          <span>⚡ {p.responseTime}</span>
-        </div>
-
-        {/* Departure + handoff icons */}
-        <div className="flex items-center justify-between mb-3">
-          <p className="text-[11px] text-muted flex items-center gap-1 flex-wrap">
-            ✈️ {p.date}
-            {daysUntil !== null && (
-              <span className={`font-semibold ${daysUntil<=5?"text-accent":"text-muted"}`}>
-                · {daysUntil}d left
-              </span>
-            )}
-          </p>
-          <div className="flex items-center gap-1 flex-shrink-0">
-            {p.delivery.map(d=>(
-              <span key={d} title={DELIVERY_META[d]?.label} className="text-sm leading-none">
-                {DELIVERY_META[d]?.icon}
-              </span>
-            ))}
-          </div>
-        </div>
+        <p className="text-[11px] text-muted mb-3">✈️ {p.date}</p>
 
         {/* Price row */}
-        <div className="flex items-end justify-between pt-3 border-t border-border/60 mt-auto">
-          <div>
-            <p className="text-[9px] font-black uppercase tracking-wider text-muted mb-0.5">Carry fee</p>
-            <p className="text-[18px] font-black text-ink leading-none">${p.price}</p>
-          </div>
+        <div className="flex items-center justify-between pt-3 border-t border-border/60 mt-auto">
+          <p className="text-[18px] font-black text-ink leading-none">${p.price}</p>
           <span className="text-xs font-semibold text-accent flex items-center gap-1">
             View details
             <svg className="w-3 h-3" fill="none" viewBox="0 0 12 12">
@@ -569,9 +533,10 @@ export default function BrowsePage() {
   const [userZip,   setUserZip]   = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selected,  setSelected]  = useState<Listing|null>(null);
-  const [sortBy,    setSortBy]    = useState<"soonest"|"fee-low"|"fee-high"|"rating">("soonest");
-  const [maxFee,    setMaxFee]    = useState<number|null>(null);
-  const [minRating, setMinRating] = useState<number|null>(null);
+  const [sortBy,         setSortBy]         = useState<"soonest"|"fee-low"|"fee-high"|"rating">("soonest");
+  const [maxFee,         setMaxFee]         = useState<number|null>(null);
+  const [minRating,      setMinRating]      = useState<number|null>(null);
+  const [showMoreFilters,setShowMoreFilters] = useState(false);
 
   useEffect(() => {
     const z = sessionStorage.getItem("handi_zip")||"";
@@ -656,7 +621,7 @@ export default function BrowsePage() {
           </div>
         </div>
 
-        {/* Category pills */}
+        {/* Category pills + search bar */}
         <div className="border-b border-border bg-white sticky top-[64px] z-30">
           <div className="wrap overflow-x-auto">
             <div className="flex gap-1 py-3 min-w-max">
@@ -668,6 +633,23 @@ export default function BrowsePage() {
               ))}
             </div>
           </div>
+          <div className="wrap pb-3">
+            <div className="relative">
+              <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" fill="none" viewBox="0 0 16 16">
+                <circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M10.5 10.5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+              <input
+                value={query}
+                onChange={e=>setQuery(e.target.value)}
+                placeholder="Search items, stores, travelers…"
+                className="w-full pl-10 pr-4 py-3 text-sm bg-stone border border-border rounded-2xl focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"
+              />
+              {query && (
+                <button onClick={()=>setQuery("")} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted hover:text-ink text-lg leading-none transition-colors">×</button>
+              )}
+            </div>
+          </div>
         </div>
 
         <div className="wrap py-10">
@@ -675,16 +657,6 @@ export default function BrowsePage() {
 
             {/* Sidebar */}
             <aside className="lg:w-[220px] flex-shrink-0 space-y-7">
-
-              {/* Search */}
-              <div className="relative">
-                <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" fill="none" viewBox="0 0 16 16">
-                  <circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.5"/>
-                  <path d="M10.5 10.5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-                <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search…"
-                  className="w-full pl-9 pr-4 py-3 text-sm bg-white border border-border rounded-xl focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all"/>
-              </div>
 
               {/* Sort */}
               <div>
@@ -698,34 +670,62 @@ export default function BrowsePage() {
                 </select>
               </div>
 
-              {/* Max carry fee */}
+              {/* More filters toggle */}
               <div>
-                <p className="text-xs font-black tracking-[0.18em] uppercase text-muted mb-3">Max carry fee</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {([null, 15, 25, 40] as (number|null)[]).map(f=>(
-                    <button key={f??-1} onClick={()=>setMaxFee(f)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                        maxFee===f?"bg-accent text-white":"bg-white border border-border text-muted hover:text-ink hover:border-accent/40"
-                      }`}>
-                      {f===null?"Any":`≤ $${f}`}
-                    </button>
-                  ))}
-                </div>
-              </div>
+                <button
+                  onClick={()=>setShowMoreFilters(v=>!v)}
+                  className="flex items-center gap-1.5 text-xs font-bold text-muted hover:text-accent transition-colors"
+                >
+                  <svg className={`w-3 h-3 transition-transform ${showMoreFilters?"rotate-180":""}`} fill="none" viewBox="0 0 12 12">
+                    <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  {showMoreFilters ? "Fewer filters" : "More filters"}
+                </button>
 
-              {/* Min rating */}
-              <div>
-                <p className="text-xs font-black tracking-[0.18em] uppercase text-muted mb-3">Min rating</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {([null, 4.8, 4.9] as (number|null)[]).map(r=>(
-                    <button key={r??-1} onClick={()=>setMinRating(r)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                        minRating===r?"bg-accent text-white":"bg-white border border-border text-muted hover:text-ink hover:border-accent/40"
-                      }`}>
-                      {r===null?"All":`${r}+ ★`}
-                    </button>
-                  ))}
-                </div>
+                <AnimatePresence>
+                  {showMoreFilters && (
+                    <motion.div
+                      key="more-filters"
+                      initial={{ opacity:0, height:0 }}
+                      animate={{ opacity:1, height:"auto" }}
+                      exit={{ opacity:0, height:0 }}
+                      transition={{ duration:0.25, ease:[0.22,1,0.36,1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="space-y-6 pt-5">
+                        {/* Max carry fee */}
+                        <div>
+                          <p className="text-xs font-black tracking-[0.18em] uppercase text-muted mb-3">Max carry fee</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {([null, 15, 25, 40] as (number|null)[]).map(f=>(
+                              <button key={f??-1} onClick={()=>setMaxFee(f)}
+                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                                  maxFee===f?"bg-accent text-white":"bg-white border border-border text-muted hover:text-ink hover:border-accent/40"
+                                }`}>
+                                {f===null?"Any":`≤ $${f}`}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Min rating */}
+                        <div>
+                          <p className="text-xs font-black tracking-[0.18em] uppercase text-muted mb-3">Min rating</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {([null, 4.8, 4.9] as (number|null)[]).map(r=>(
+                              <button key={r??-1} onClick={()=>setMinRating(r)}
+                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                                  minRating===r?"bg-accent text-white":"bg-white border border-border text-muted hover:text-ink hover:border-accent/40"
+                                }`}>
+                                {r===null?"All":`${r}+ ★`}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Near me */}

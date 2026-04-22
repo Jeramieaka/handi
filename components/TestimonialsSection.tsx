@@ -12,22 +12,6 @@ const T = [
     quote: "I travel for work constantly. I've made over $600 just by carrying skincare and snacks on routes I was already flying. It's the most effortless side income I've ever had.",
     name: "David K.", role: "Top Carrier · Seoul", emoji: "🧔", rating: 5, route: "Seoul → London",
   },
-  {
-    quote: "The handoff was so smooth. The traveler messaged when she landed, we met at a nearby café. My Ladurée macarons arrived perfectly intact. Would absolutely use again.",
-    name: "Sophie T.", role: "Buyer · Amsterdam", emoji: "👱", rating: 5, route: "Paris → Amsterdam",
-  },
-  {
-    quote: "Used handi to get a Gentle Monster collab that sold out worldwide in 4 minutes. My carrier snagged it in Seoul for me. This service is borderline essential now.",
-    name: "Marcus L.", role: "Buyer · Singapore", emoji: "🧑", rating: 5, route: "Seoul → Singapore",
-  },
-  {
-    quote: "As a frequent flyer, I've offset three months of airport lounges just from carry fees. The buyers are always polite and the escrow means zero payment stress.",
-    name: "Priya N.", role: "Carrier · London", emoji: "🧑‍💼", rating: 5, route: "London → Mumbai",
-  },
-  {
-    quote: "Got a limited Harrods Christmas tin that's impossible to ship internationally. My carrier brought it door-to-door from London in five days. Zero hassle, great condition.",
-    name: "Yuki T.", role: "Buyer · Osaka", emoji: "🧓", rating: 5, route: "London → Osaka",
-  },
 ];
 
 export default function TestimonialsSection() {
@@ -64,7 +48,7 @@ export default function TestimonialsSection() {
       <div className="wrap">
       <div
         ref={trackRef}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto"
       >
         {T.map((t, i) => (
           <motion.div
