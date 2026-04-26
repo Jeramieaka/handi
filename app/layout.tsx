@@ -4,6 +4,7 @@ import "./globals.css";
 import EntranceScreen from "@/components/EntranceScreen";
 import ChatWidget from "@/components/ChatWidget";
 import { CartProvider } from "@/components/CartContext";
+import { ZipProvider } from "@/components/ZipContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -45,11 +46,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${bricolage.variable} ${playfair.variable}`}>
       <body className="antialiased">
-        <CartProvider>
-          <EntranceScreen />
-          {children}
-          <ChatWidget />
-        </CartProvider>
+        <ZipProvider>
+          <CartProvider>
+            <EntranceScreen />
+            {children}
+            <ChatWidget />
+          </CartProvider>
+        </ZipProvider>
       </body>
     </html>
   );

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/components/CartContext";
+import { useZip } from "@/components/ZipContext";
 
 const NAV = [
   { label: "Browse",        href: "/browse"       },
@@ -16,13 +17,13 @@ const NAV = [
 export default function Navbar() {
   const [scrolled,  setScrolled]  = useState(false);
   const [open,      setOpen]      = useState(false);
-  const [zip,       setZip]       = useState("");
   const [zipOpen,   setZipOpen]   = useState(false);
   const [zipInput,  setZipInput]  = useState("");
   const [user,      setUser]      = useState<string | null>(null);
   const pathname = usePathname();
   const isDark   = pathname === "/" && !scrolled;
   const { totalItems } = useCart();
+  const { zip, setZip } = useZip();
   const zipRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,13 +33,9 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const saved = sessionStorage.getItem("handi_zip");
-    if (saved) setZip(saved);
     const u = sessionStorage.getItem("handi_user");
     if (u) setUser(u);
     const onStorage = () => {
-      const z = sessionStorage.getItem("handi_zip");
-      if (z) setZip(z);
       const usr = sessionStorage.getItem("handi_user");
       setUser(usr);
     };
@@ -65,11 +62,7 @@ export default function Navbar() {
 
   const saveZip = () => {
     const val = zipInput.trim();
-    if (val) {
-      setZip(val);
-      sessionStorage.setItem("handi_zip", val);
-      window.dispatchEvent(new Event("storage"));
-    }
+    if (val) setZip(val);
     setZipOpen(false);
   };
 

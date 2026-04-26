@@ -2,89 +2,124 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const LINKS = [
-  { label:"Browse",       href:"/browse"      },
-  { label:"Post a Trip",  href:"/post-trip"    },
-  { label:"How It Works", href:"/how-it-works" },
-  { label:"Membership",   href:"/membership"   },
-  { label:"Privacy",      href:"#"             },
-  { label:"Terms",        href:"#"             },
+  { label: "Browse",      href: "/browse"      },
+  { label: "Post a Trip", href: "/post-trip"    },
+  { label: "How It Works",href: "/how-it-works" },
+  { label: "Membership",  href: "/membership"   },
+  { label: "Privacy",     href: "#"             },
+  { label: "Terms",       href: "#"             },
 ];
 
 export default function CTASection() {
   return (
     <>
-      {/* CTA */}
-      <section className="bg-stone border-t border-border py-section">
-        <div className="wrap">
-          <div className="relative bg-ink rounded-[2.5rem] overflow-hidden px-10 py-20 lg:py-28 text-center">
+      <section className="relative overflow-hidden py-36 px-6" style={{ background: "#0A0A09" }}>
 
-            {/* Glow effects */}
-            <div className="absolute inset-0 pointer-events-none"
-              style={{ background: "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,69,0,0.20), transparent)" }} />
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-accent/30 to-transparent" />
+        {/* Background city photo — subtle */}
+        <div className="absolute inset-0 pointer-events-none">
+          <Image
+            src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1600&q=85"
+            alt="Paris"
+            fill
+            unoptimized
+            className="object-cover object-center"
+            style={{ opacity: 0.07 }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(to right, #0A0A09 0%, rgba(10,10,9,0.85) 60%, #0A0A09 100%)" }}
+          />
+        </div>
 
-            <motion.p initial={{ opacity:0,y:12 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
-              transition={{ duration:0.5 }} className="eyebrow mb-6 text-accent">
+        {/* Accent glow */}
+        <div
+          className="absolute bottom-0 left-1/4 w-[600px] h-[300px] pointer-events-none"
+          style={{ background: "radial-gradient(ellipse at center, rgba(255,69,0,0.12) 0%, transparent 70%)" }}
+        />
+
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <div className="max-w-[820px]">
+
+            <motion.p
+              className="text-[10px] font-bold tracking-[0.35em] uppercase mb-10"
+              style={{ color: "rgba(255,69,0,0.65)" }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
               Get started today — it&apos;s free
             </motion.p>
 
-            <motion.h2 initial={{ opacity:0,y:28 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
-              transition={{ duration:0.7, delay:0.08, ease:[0.22,1,0.36,1] }}
-              className="text-d2 font-black text-white text-balance mb-6">
-              Ready to carry,
-              <br />
-              <span className="text-gradient">or be carried?</span>
-            </motion.h2>
+            <div className="overflow-hidden mb-2">
+              <motion.h2
+                className="font-black text-white leading-[0.91] tracking-tight"
+                style={{ fontSize: "clamp(56px, 7.5vw, 108px)" }}
+                initial={{ y: "100%" }}
+                whileInView={{ y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+              >
+                Ready to carry
+              </motion.h2>
+            </div>
+            <div className="overflow-hidden mb-14">
+              <motion.h2
+                className="font-black leading-[0.91] tracking-tight"
+                style={{ fontSize: "clamp(56px, 7.5vw, 108px)", color: "#FF4500" }}
+                initial={{ y: "100%" }}
+                whileInView={{ y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
+              >
+                the world?
+              </motion.h2>
+            </div>
 
-            <motion.p initial={{ opacity:0,y:16 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
-              transition={{ duration:0.55, delay:0.18 }}
-              className="text-body-lg text-white/40 max-w-lg mx-auto mb-12 leading-relaxed">
-              Join thousands of buyers and travelers already making the world
-              a little smaller — one trip at a time.
-            </motion.p>
-
-            <motion.div initial={{ opacity:0,y:16 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }}
-              transition={{ duration:0.55, delay:0.26 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            <motion.div
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mb-10"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.28 }}
             >
-              <Link href="/browse"
-                className="btn-primary text-[16px] px-10 py-4">
+              <Link
+                href="/browse"
+                className="inline-flex items-center gap-2.5 px-9 py-4 rounded-full font-bold text-[15px] text-white transition-all duration-200 hover:brightness-110 active:scale-[0.97]"
+                style={{ background: "#FF4500" }}
+              >
                 Find a traveler
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
+                  <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </Link>
-              <Link href="/post-trip" className="btn-ghost-white text-[16px] px-10 py-4">
-                Post a trip
+              <Link
+                href="/post-trip"
+                className="text-[14px] font-semibold transition-colors duration-200"
+                style={{ color: "rgba(255,255,255,0.32)" }}
+              >
+                Post a trip →
               </Link>
             </motion.div>
 
-            <motion.p initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }}
-              transition={{ duration:0.5, delay:0.4 }}
-              className="mt-8 text-xs text-white/20">
+            <motion.p
+              className="text-[12px]"
+              style={{ color: "rgba(255,255,255,0.16)" }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
               Free to join · No subscription fees · No hidden charges
             </motion.p>
-
-            {/* Stats strip */}
-            <motion.div initial={{ opacity:0, y:12 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
-              transition={{ duration:0.5, delay:0.5 }}
-              className="mt-14 pt-10 border-t border-white/8 grid grid-cols-2 sm:grid-cols-4 gap-6">
-              {[
-                { value:"12,400+", label:"Orders completed" },
-                { value:"68",      label:"Cities worldwide" },
-                { value:"3,200+",  label:"Active travelers" },
-                { value:"4.9★",    label:"Average rating"  },
-              ].map(s => (
-                <div key={s.label} className="text-center">
-                  <p className="text-2xl font-black text-white tabular-nums">{s.value}</p>
-                  <p className="text-xs text-white/35 mt-1">{s.label}</p>
-                </div>
-              ))}
-            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Mini footer */}
       <footer className="bg-stone border-t border-border py-10">
         <div className="wrap flex flex-col md:flex-row items-center justify-between gap-6">
           <Link href="/" className="flex items-center gap-0.5 select-none">
