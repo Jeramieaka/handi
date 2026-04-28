@@ -1,0 +1,459 @@
+/* handi — Design Tokens */
+/* Type rationale: Inter (humanist sans, soft terminals) and JetBrains Mono
+ * (rounded, even rhythm) feel calmer than Geist's sharper geometric strokes.
+ * Fraunces is a soft, optical-sized serif — replaces the high-contrast
+ * Instrument Serif so display headlines feel rounder/warmer. */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ── Color: warm neutrals ── */
+  --paper: #FAF8F4;        /* page bg */
+  --paper-2: #F1EDE5;      /* secondary surfaces */
+  --paper-3: #E8E2D5;      /* dividers / inset */
+  --ink: #1A1714;          /* primary text / strong */
+  --ink-2: #4A443D;        /* body */
+  --ink-3: #8A8378;        /* muted */
+  --ink-4: #BDB6A8;        /* placeholder */
+  --line: rgba(26,23,20,0.08);
+  --line-2: rgba(26,23,20,0.14);
+
+  /* ── Accent: rouge (deep burgundy, premium) ── */
+  --rouge: #8B1E2D;
+  --rouge-deep: #6B1722;
+  --rouge-soft: #F4E5E7;
+  --rouge-ink: #2B0A10;
+
+  /* status */
+  --green: #2E5D3F;
+  --green-soft: #DDE8DE;
+  --amber: #8B6914;
+  --amber-soft: #F4ECD2;
+  --red: #A8324A;
+
+  /* dark surface (for selective hero/footer) */
+  --noir: #14110E;
+  --noir-2: #211D17;
+
+  /* ── Type ── */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: 'Fraunces', 'Cambria', 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* ── Radius ── */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-pill: 999px;
+
+  /* ── Shadow ── */
+  --shadow-sm: 0 1px 2px rgba(26,23,20,.06);
+  --shadow-md: 0 4px 16px rgba(26,23,20,.08), 0 1px 2px rgba(26,23,20,.04);
+  --shadow-lg: 0 24px 64px rgba(26,23,20,.12), 0 2px 8px rgba(26,23,20,.06);
+  --shadow-rouge: 0 8px 24px rgba(139,30,45,.18);
+
+  /* ── Motion ── */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --ease-in-out: cubic-bezier(.6, 0, .2, 1);
+
+  /* ── Breakpoints (reference) ── */
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+
+  /* ── Container side padding (responsive via media queries below) ── */
+  --pad-x: 40px;
+}
+@media (max-width: 1024px) {
+  :root { --pad-x: 28px; }
+}
+@media (max-width: 640px) {
+  :root { --pad-x: 18px; }
+}
+
+/* ── Page reset — kills the default 8px body margin (the white border) ── */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--paper);
+}
+html, body { overflow-x: clip; max-width: 100vw; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); }
+
+/* Respect users who prefer reduced motion — kill animations + transitions */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Reset within the design surface ── */
+.h-app, .h-app * {
+  box-sizing: border-box;
+}
+.h-app {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Inter feature flags: cv11 = single-storey a (softer), ss01 = open digits */
+  font-feature-settings: 'cv11', 'ss01';
+  letter-spacing: -0.005em;
+  line-height: 1.5;
+}
+.h-app button { font-family: inherit; cursor: pointer; }
+.h-app input, .h-app textarea, .h-app select { font-family: inherit; }
+.h-app a { color: inherit; text-decoration: none; }
+
+/* ── Type scale ── */
+/* Fraunces optical sizing tuned for display: opsz 96 + softer weight gives
+ * rounder shoulders than Instrument Serif's high-contrast wedge. */
+.h-display {
+  font-family: var(--font-serif);
+  font-weight: 380;
+  letter-spacing: -0.022em;
+  line-height: 0.98;
+  font-variation-settings: 'opsz' 96, 'SOFT' 80;
+}
+.h-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.h-mono { font-family: var(--font-mono); }
+.h-serif { font-family: var(--font-serif); font-variation-settings: 'opsz' 24, 'SOFT' 60; }
+/* Helper for premium "hero" sections: tight rhythm, generous breathing room above the eyebrow */
+.h-hero { padding: 48px 40px 32px; max-width: 1200px; margin: 0 auto; }
+.h-hero h1 { margin: 8px 0 0; }
+
+/* ── Atoms ── */
+.h-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px; padding: 12px 20px; border-radius: var(--r-pill);
+  font-size: 14px; font-weight: 500; letter-spacing: -0.005em;
+  border: 1px solid transparent; transition: all .18s var(--ease-out);
+  white-space: nowrap; cursor: pointer;
+}
+/* Use .h-app prefix to win specificity against .h-app a { color: inherit; } */
+.h-app .h-btn-primary, .h-btn-primary { background: var(--ink); color: var(--paper); }
+.h-app .h-btn-primary:hover, .h-btn-primary:hover { background: var(--rouge); transform: translateY(-1px); box-shadow: var(--shadow-rouge); }
+.h-app .h-btn-rouge, .h-btn-rouge { background: var(--rouge); color: white; }
+.h-app .h-btn-rouge:hover, .h-btn-rouge:hover { background: var(--rouge-deep); transform: translateY(-1px); box-shadow: var(--shadow-rouge); }
+.h-app .h-btn-ghost, .h-btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
+.h-app .h-btn-ghost:hover, .h-btn-ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.h-btn-sm { padding: 8px 14px; font-size: 13px; }
+.h-btn-lg { padding: 16px 28px; font-size: 15px; }
+
+.h-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px; border-radius: var(--r-pill);
+  font-size: 12px; font-weight: 500;
+  background: var(--paper-2); color: var(--ink-2);
+  border: 1px solid var(--line);
+}
+.h-chip-rouge { background: var(--rouge-soft); color: var(--rouge-deep); border-color: rgba(139,30,45,.15); }
+.h-chip-green { background: var(--green-soft); color: var(--green); border-color: rgba(46,93,63,.15); }
+.h-chip-amber { background: var(--amber-soft); color: var(--amber); border-color: rgba(139,105,20,.18); }
+.h-chip-noir { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.h-input {
+  width: 100%; padding: 12px 14px;
+  border: 1px solid var(--line-2); border-radius: var(--r-md);
+  background: var(--paper); color: var(--ink); font-size: 14px;
+  transition: border-color .15s, background .15s;
+  outline: none;
+}
+.h-input:focus { border-color: var(--ink); background: white; }
+.h-input::placeholder { color: var(--ink-4); }
+
+.h-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.h-divider { height: 1px; background: var(--line); border: none; margin: 0; }
+.h-divider-strong { height: 1px; background: var(--line-2); border: none; margin: 0; }
+
+/* placeholder image (subtle stripes) */
+.h-ph {
+  background:
+    repeating-linear-gradient(135deg, var(--paper-2) 0 8px, var(--paper-3) 8px 16px);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 11px; color: var(--ink-3);
+  letter-spacing: 0.04em;
+}
+
+/* avatar */
+.h-avatar {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--paper-2); border: 1px solid var(--line);
+  font-family: var(--font-mono); font-size: 12px; color: var(--ink-2);
+  font-weight: 500;
+  overflow: hidden;
+}
+
+/* ── Animation utilities ── */
+@keyframes h-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes h-card-in {
+  from { opacity: 0; transform: translateY(16px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes h-card-slide {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes h-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes h-pulse-rouge {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139,30,45,.4); }
+  50% { box-shadow: 0 0 0 12px rgba(139,30,45,0); }
+}
+.h-fade-up { animation: h-fade-up .6s var(--ease-out) both; }
+.h-card-in { animation: h-card-in .55s var(--ease-out) both; }
+.h-card-slide { animation: h-card-slide .5s var(--ease-out) both; }
+.h-pulse { animation: h-pulse-rouge 2s infinite; }
+
+/* Word-by-word reveal for hero text (used by StaggerText) */
+@keyframes h-word-up {
+  from { opacity: 0; transform: translateY(110%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Page-transition: applied to <PageTransition> on every route change */
+@keyframes h-page-in {
+  from { opacity: 0; transform: translateY(8px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);   filter: blur(0); }
+}
+.h-page-in { animation: h-page-in .55s cubic-bezier(.2,.7,.2,1) both; }
+
+/* Image zoom on parent hover. Mark parent with .h-zoom-frame, child with .h-zoom-img */
+.h-zoom-frame { overflow: hidden; }
+.h-zoom-frame .h-zoom-img,
+.h-zoom-frame img { transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+.h-zoom-frame:hover .h-zoom-img,
+.h-zoom-frame:hover img { transform: scale(1.06); }
+
+/* Subtle ambient glow on rouge buttons when in viewport */
+@keyframes h-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.h-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+  background-size: 200% 100%;
+  animation: h-shimmer 2.4s infinite linear;
+}
+
+/* Animated underline for inline links */
+.h-link-underline {
+  position: relative;
+  display: inline-block;
+}
+.h-link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -2px;
+  height: 1px; width: 100%;
+  background: currentColor;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.h-link-underline:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+/* Buttons get a tiny press feedback */
+.h-btn:active { transform: translateY(1px) scale(.98) !important; }
+.h-press { transition: transform .15s var(--ease-out); }
+.h-press:active { transform: scale(.95); }
+
+/* Card hover lift — replaces JS-driven onMouseEnter/Leave style mutations */
+.h-card-hover { transition: transform .2s var(--ease-out), box-shadow .2s var(--ease-out); }
+@media (hover: hover) {
+  .h-card-hover:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+}
+
+/* Flight path — the dashed route line draws itself once on load.
+ * Used by the landing hero. The plane itself rides the same path via
+ * SVG <animateMotion>, so no JS or offset-path tricks needed. */
+@keyframes h-flight-draw {
+  from { stroke-dashoffset: 4000; }
+  to   { stroke-dashoffset: 0; }
+}
+.h-flight-line {
+  stroke-dasharray: 4 8;
+  stroke-dashoffset: 4000;
+  animation: h-flight-draw 4.5s cubic-bezier(.2,.7,.2,1) .6s both;
+}
+.h-city-dot {
+  animation: h-fade-up .8s var(--ease-out) both;
+}
+
+/* Nav link — text color transitions on hover (150ms), and a 1px rouge bar
+ * grows from left to full width (300ms). The .is-active state holds the
+ * underline at full width so the current page reads like a focused tab. */
+.h-nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 8px 2px;
+  margin: 0 14px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--ink-3);
+  transition: color .15s ease;
+}
+.h-nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 2px;
+  height: 1px; width: 0;
+  background: var(--rouge);
+  transition: width .3s cubic-bezier(.2,.7,.2,1);
+}
+.h-nav-link:hover { color: var(--ink); }
+.h-nav-link:hover::after,
+.h-nav-link.is-active::after { width: 100%; }
+.h-nav-link.is-active { color: var(--ink); }
+
+/* scrollbar */
+.h-app ::-webkit-scrollbar { width: 6px; height: 6px; }
+.h-app ::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+.h-app ::-webkit-scrollbar-track { background: transparent; }
+
+/* ─────────────────────────────────────────────────────────────────
+   Responsive utilities and overrides
+   ───────────────────────────────────────────────────────────────── */
+
+/* Touch-target minimums on coarse pointers */
+@media (pointer: coarse) {
+  .h-btn, .h-btn-sm { min-height: 44px; }
+  .h-input { min-height: 44px; }
+}
+
+/* Visibility helpers */
+.h-show-mobile { display: none; }
+@media (max-width: 768px) {
+  .h-show-mobile { display: inline-flex; }
+  .h-hide-mobile { display: none !important; }
+}
+
+/* Fluid display typography — large headlines auto-shrink on mobile */
+@media (max-width: 768px) {
+  .h-display { font-size: clamp(32px, 9vw, 56px) !important; line-height: 1.04 !important; }
+  .h-serif { font-size: clamp(20px, 5.4vw, 28px); }
+}
+
+/* ── Tablet (≤ 1024px) ── */
+@media (max-width: 1024px) {
+  /* Stack 4-col grids → 2-col (most common: stat rows, item card grids) */
+  .h-app [style*="grid-template-columns: repeat(4, 1fr)"],
+  .h-app [style*="gridTemplateColumns: repeat(4, 1fr)"],
+  .h-app [style*="grid-template-columns:repeat(4,1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  /* Browse sidebar (220px 1fr) → stack */
+  .h-app [style*="220px 1fr"],
+  .h-app [style*="220px  1fr"] { grid-template-columns: 1fr !important; }
+  /* Auth split layout → single col */
+  .h-app [style*="1fr 1.1fr"] { grid-template-columns: 1fr !important; }
+  /* Item detail 1.2fr 1fr → stack */
+  .h-app [style*="1.2fr 1fr"] { grid-template-columns: 1fr !important; gap: 32px !important; }
+  /* Aside sticky positioning becomes static when stacked */
+  .h-app aside[style*="position: sticky"],
+  .h-app aside[style*="position:sticky"] { position: static !important; }
+  /* Footer 5-col grid → 2-col */
+  .h-app footer [style*="2fr 1fr 1fr 1fr 1fr"] { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+}
+
+/* ── Mobile (≤ 768px) ── */
+@media (max-width: 768px) {
+  /* Reduce side padding on every section/nav/footer */
+  .h-app section,
+  .h-app footer,
+  .h-app main { padding-left: var(--pad-x) !important; padding-right: var(--pad-x) !important; }
+  .h-app nav { padding-left: var(--pad-x) !important; padding-right: var(--pad-x) !important; }
+
+  /* Stack 3-col grids → 1-col */
+  .h-app [style*="grid-template-columns: repeat(3, 1fr)"],
+  .h-app [style*="gridTemplateColumns: repeat(3, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* Stack 4-col grids → 1-col */
+  .h-app [style*="grid-template-columns: repeat(4, 1fr)"],
+  .h-app [style*="gridTemplateColumns: repeat(4, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* Common dual-column splits stack on mobile */
+  .h-app [style*="2fr 1fr"],
+  .h-app [style*="1.4fr 1fr"],
+  .h-app [style*="1.6fr 1fr"],
+  .h-app [style*="1fr 380px"] { grid-template-columns: 1fr !important; gap: 24px !important; }
+
+  /* Order rows / trip rows: collapse multi-column to stacked */
+  .h-app [style*="88px 1fr auto auto auto"],
+  .h-app [style*="120px 1fr auto"],
+  .h-app [style*="1.2fr 0.8fr 1fr 0.8fr auto"] {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  /* Footer stacks fully */
+  .h-app footer [style*="2fr 1fr 1fr 1fr 1fr"] { grid-template-columns: 1fr !important; gap: 24px !important; }
+  /* Footer bottom row wraps */
+  .h-app footer > div:last-child { flex-direction: column; gap: 8px; align-items: flex-start !important; }
+
+  /* Nav: hide secondary links by default — surfaced via mobile drawer */
+  .h-app nav .h-nav-link { display: none; }
+  .h-app nav { padding-top: 12px !important; padding-bottom: 12px !important; }
+
+  /* Hero typography breathes a bit */
+  .h-app h1.h-display { font-size: clamp(40px, 11vw, 72px) !important; }
+
+  /* Aside sticky off on mobile */
+  .h-app aside { position: static !important; top: auto !important; }
+
+  /* Cart and detail panels need full width */
+  .h-app aside[style*="380px"] { width: 100% !important; max-width: none !important; }
+
+  /* Reduce hero min-height so buttons aren't pushed off-screen */
+  .h-app section[style*="100vh"] { min-height: auto !important; padding-top: 32px !important; padding-bottom: 56px !important; }
+
+  /* Smaller paddings on cards */
+  .h-app .h-card { border-radius: var(--r-md); }
+
+  /* Big fixed widths get capped */
+  .h-app [style*="width: 320"],
+  .h-app [style*="width:320"] { max-width: 100% !important; }
+
+  /* Inputs reach full width on mobile */
+  .h-app input.h-input,
+  .h-app textarea.h-input,
+  .h-app select.h-input { width: 100% !important; }
+}
+
+/* Touch targets */
+@media (max-width: 768px) {
+  .h-app button,
+  .h-app a.h-btn,
+  .h-app .h-btn { min-height: 44px; }
+}
