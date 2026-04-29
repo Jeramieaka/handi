@@ -95,7 +95,7 @@ export function PageBrowse() {
             <div style={{ marginTop: 32, padding: 20, background: 'var(--rouge-soft)', borderRadius: 'var(--r-md)', border: '1px solid rgba(139,30,45,.12)' }}>
               <div className="h-eyebrow" style={{ color: 'var(--rouge-deep)', marginBottom: 8 }}>Don't see it?</div>
               <p style={{ fontSize: 13, color: 'var(--rouge-ink)', lineHeight: 1.5, margin: 0 }}>Post a request — carriers heading your way will reach out.</p>
-              <Link to="/requests" className="h-btn h-btn-rouge h-btn-sm" style={{ marginTop: 12, width: '100%' }}>Post a request →</Link>
+              <Link to="/post-request" className="h-btn h-btn-rouge h-btn-sm" style={{ marginTop: 12, width: '100%' }}>Post a request →</Link>
             </div>
           </aside>
 

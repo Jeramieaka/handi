@@ -5,23 +5,22 @@ import { HVerified } from './primitives';
 // Subtle, premium-grade conversion devices grounded in trust.
 // Every component is designed to feel editorial, not sales-y.
 
-const { useState: usePsy, useEffect: useEffectPsy, useRef: useRefPsy } = React;
-
 // ──────────────────────────────────────────────────────────
 // HHoldTimer — Endowment effect
 // "Reserved for you" countdown. Feels like a concierge holding a table,
 // not a pushy timer. Resets when user interacts.
 // ──────────────────────────────────────────────────────────
 export function HHoldTimer({ minutes = 15, label = 'Reserved for you', compact = false }) {
-  const [secs, setSecs] = usePsy(minutes * 60);
-  useEffectPsy(() => {
+  const [secs, setSecs] = useState(minutes * 60);
+  useEffect(() => {
     setSecs(minutes * 60);
     const id = setInterval(() => setSecs(s => Math.max(0, s - 1)), 1000);
     return () => clearInterval(id);
   }, [minutes]);
   const m = Math.floor(secs / 60);
   const s = secs % 60;
-  const pct = (secs / (minutes * 60)) * 100;
+  // Guard against minutes=0 — prevents NaN that would break the progress bar.
+  const pct = minutes > 0 ? (secs / (minutes * 60)) * 100 : 0;
 
   if (compact) {
     return (
@@ -127,8 +126,11 @@ export function HCarrierTrust({ name = 'James L.', verifications = [], stats = [
 // ──────────────────────────────────────────────────────────
 export function HAnchorPrice({ retail = 120, fee = 35, localResale = 240, currency = '$' }) {
   const handiTotal = retail + fee;
-  const saved = localResale - handiTotal;
-  const savedPct = Math.round((saved / localResale) * 100);
+  // Guard against handi being more expensive than the anchor (which would
+  // produce a negative savings %). Display 0% in that edge case rather than
+  // a misleading "−25% savings".
+  const saved = Math.max(0, localResale - handiTotal);
+  const savedPct = saved > 0 && localResale > 0 ? Math.round((saved / localResale) * 100) : 0;
 
   return (
     <div style={{
@@ -161,8 +163,8 @@ export function HAnchorPrice({ retail = 120, fee = 35, localResale = 240, curren
 // creates light commitment that boosts return-conversion.
 // ──────────────────────────────────────────────────────────
 export function HMicroSave({ initialCount = 0, label = 'Save', size = 'md' }) {
-  const [saved, setSaved] = usePsy(false);
-  const [count, setCount] = usePsy(initialCount);
+  const [saved, setSaved] = useState(false);
+  const [count, setCount] = useState(initialCount);
   const px = size === 'sm' ? 32 : 40;
 
   return (
@@ -203,8 +205,8 @@ export function HLiveActivity({ events, position = 'inline' }) {
     { who: 'Lin', where: 'Vancouver', what: 'just signed up', when: '11 min ago' },
     { who: 'Robin', where: 'Austin', what: 'booked Seoul → SF', when: '14 min ago' },
   ];
-  const [i, setI] = usePsy(0);
-  useEffectPsy(() => {
+  const [i, setI] = useState(0);
+  useEffect(() => {
     const id = setInterval(() => setI(x => (x + 1) % data.length), 5500);
     return () => clearInterval(id);
   }, [data.length]);

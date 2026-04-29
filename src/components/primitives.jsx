@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { isSignedIn, signOut } from '../auth';
 import { useCart, cartCount } from '../cart';
 import { HD } from '../data/sample';
@@ -35,7 +35,7 @@ export function HAvatar({ name = '', src, size = 32, ring = false }) {
       width: size, height: size, fontSize: size * 0.38,
       boxShadow: ring ? '0 0 0 2px var(--paper), 0 0 0 3px var(--rouge)' : 'none'
     }}>
-      {src ? <img src={src} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }}/> : initials}
+      {src ? <img src={src} alt={name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }}/> : initials}
     </span>
   );
 }
@@ -80,6 +80,7 @@ export function HNav({ active = '', signedIn, role = 'buyer' }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const items = [
     ['Browse','/browse'],
+    ['Carriers','/carriers'],
     ['Requests','/requests'],
     ['Post a Trip','/post-trip'],
     ['How it works','/how-it-works'],
@@ -199,6 +200,8 @@ function HMobileDrawer({ items, active, isIn, onClose, onSignOut }) {
             ['Dashboard', '/dashboard'],
             ['Orders', '/orders'],
             ['My trips', '/trips'],
+            ['Following', '/profile?tab=following'],
+            ['Followers', '/profile?tab=followers'],
             ['Wallet', '/wallet'],
             ['Messages', '/messages'],
             ['Profile', '/profile'],
@@ -234,6 +237,7 @@ const navIconBtn = {
 
 // ─── User menu (avatar → member-center popover) ─────
 export function HUserMenu({ onSignOut }) {
+  const followSet = useFollowing();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   const navigate = useNavigate();
@@ -248,9 +252,12 @@ export function HUserMenu({ onSignOut }) {
     return () => { document.removeEventListener('mousedown', onClick); document.removeEventListener('keydown', onKey); };
   }, [open]);
 
+  const followersCount = (HD.followers || []).length;
   const links = [
     { to: '/dashboard', icon: '🏠', label: 'Dashboard' },
     { to: '/profile', icon: '👤', label: 'Profile · reviews' },
+    { to: '/profile?tab=following', icon: '✦', label: 'Following', meta: `${followSet.size}` },
+    { to: '/profile?tab=followers', icon: '◐', label: 'Followers', meta: `${followersCount}` },
     { to: '/wallet', icon: '💳', label: 'Wallet & payouts', meta: `$${u.walletAvailable}` },
     { to: '/orders', icon: '📦', label: 'Orders', meta: `${u.completedOrders}` },
     { to: '/trips', icon: '✈️', label: 'My trips', meta: `${u.completedTrips}` },
@@ -597,6 +604,58 @@ export function HSectionHead({ eyebrow, title, sub, align = 'left', dark }) {
       <h2 className="h-display" style={{ fontSize: 56, margin: 0, color: 'inherit' }}>{title}</h2>
       {sub && <p style={{ marginTop: 16, fontSize: 15, color: dark ? 'rgba(250,248,244,.7)' : 'var(--ink-2)', maxWidth: 520, lineHeight: 1.55, marginLeft: align === 'center' ? 'auto' : 0, marginRight: align === 'center' ? 'auto' : 0 }}>{sub}</p>}
     </div>
+  );
+}
+
+// ─── Follow carrier button ───────────────────────────────────────────────
+// Small toggle pill. Drops into any carrier surface (item detail, order
+// detail, message thread header, profile). Persists via src/follow.js.
+// Gated on auth: signed-out users get bounced to /signin?from=<current>.
+import { useFollowing, toggleFollow } from '../follow';
+
+export function HFollowButton({ name, size = 'md' }) {
+  const set = useFollowing();
+  const following = set.has(name);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const onClick = (e) => {
+    e.preventDefault?.();
+    e.stopPropagation?.();
+    if (!isSignedIn()) {
+      const from = `${location.pathname}${location.search}${location.hash}`;
+      navigate(`/signin?from=${encodeURIComponent(from)}`);
+      return;
+    }
+    toggleFollow(name);
+  };
+  const padding = size === 'sm' ? '6px 12px' : '8px 14px';
+  const fontSize = size === 'sm' ? 12 : 13;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={following}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 6,
+        padding, borderRadius: 999, cursor: 'pointer',
+        border: '1px solid',
+        borderColor: following ? 'var(--ink)' : 'var(--line-2)',
+        background: following ? 'var(--ink)' : 'transparent',
+        color: following ? 'var(--paper)' : 'var(--ink-2)',
+        fontSize, fontFamily: 'inherit', fontWeight: 500,
+        transition: 'background .15s var(--ease-out), color .15s, border-color .15s',
+        whiteSpace: 'nowrap',
+      }}
+      onMouseEnter={(e) => { if (!following) e.currentTarget.style.borderColor = 'var(--ink-3)'; }}
+      onMouseLeave={(e) => { if (!following) e.currentTarget.style.borderColor = 'var(--line-2)'; }}
+    >
+      {following ? (
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+      ) : (
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      )}
+      {following ? 'Following' : 'Follow'}
+    </button>
   );
 }
 

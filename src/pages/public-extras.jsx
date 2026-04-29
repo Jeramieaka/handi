@@ -44,16 +44,22 @@ export function PageHowItWorks() {
         />
       </section>
 
-      {/* Five steps with numbered timeline */}
+      {/* Five steps with numbered timeline — content swaps based on Buyer / Carrier toggle. */}
       <section style={{ padding: '80px 40px 120px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '120px 1fr', gap: 0 }}>
-          {[
-            { n: '01', t: 'Browse, or post a request', d: 'Filter active carriers by city and category. If nobody is heading your way, post a request — carriers will see it next time they fly.', img: 'https://images.unsplash.com/photo-1568667256549-094345857637?w=900&q=85', who: 'Buyer · 30 sec' },
-            { n: '02', t: 'Reserve & pay into escrow', d: 'You pay the retail price + carry fee at checkout. Funds sit in our escrow account — the carrier doesn\'t see a cent yet.', img: 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=900&q=85', who: 'Buyer · 1 min' },
-            { n: '03', t: 'Carrier purchases at retail', d: 'They go to the shop, pay with their own card, and upload a photo of the receipt + product to your private chat.', img: 'https://images.unsplash.com/photo-1555529902-5261145633bf?w=900&q=85', who: 'Carrier · variable' },
-            { n: '04', t: 'In flight', d: 'Live tracking shows the trip status. You and the carrier coordinate the hand-off — meetup, courier, or doorstep.', img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=900&q=85', who: '~ 1–14 days' },
-            { n: '05', t: 'Receive & release', d: 'You inspect the item. Tap "Confirm receipt" and escrow releases instantly to the carrier. Both parties leave a review.', img: 'https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=900&q=85', who: 'Buyer · instant' },
-          ].map((s, i, arr) => (
+        <div key={tab} style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '120px 1fr', gap: 0, animation: 'h-fade-up .35s var(--ease-out) both' }}>
+          {(tab === 'buyer' ? [
+            { n: '01', t: 'Browse, or post a request',  d: 'Filter active carriers by city and category. If nobody is heading your way, post a request — carriers will see it next time they fly.',                            img: 'https://images.unsplash.com/photo-1568667256549-094345857637?w=900&q=85', who: 'Buyer · 30 sec' },
+            { n: '02', t: 'Reserve & pay into escrow',  d: 'You pay the retail price + carry fee at checkout. Funds sit in our escrow account — the carrier doesn\'t see a cent yet.',                                          img: 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=900&q=85', who: 'Buyer · 1 min' },
+            { n: '03', t: 'Watch your carrier shop',    d: 'They visit the store, photograph the receipt and unboxed item, then upload it straight into your private chat. You confirm everything looks right before they pack.', img: 'https://images.unsplash.com/photo-1555529902-5261145633bf?w=900&q=85', who: 'Buyer · 30 sec' },
+            { n: '04', t: 'In flight',                  d: 'Live tracking shows the trip status. Coordinate the hand-off — meetup, courier, or doorstep — and message the carrier directly.',                                  img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=900&q=85', who: '~ 1–14 days' },
+            { n: '05', t: 'Receive & release',          d: 'Inspect the item in person. Tap "Confirm receipt" and escrow releases instantly to the carrier. Leave a review — they\'ll leave one for you too.',               img: 'https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=900&q=85', who: 'Buyer · instant' },
+          ] : [
+            { n: '01', t: 'Post your trip',             d: 'Tell us your route, dates, and how many slots you can carry. We surface your trip to buyers who already need that route.',                                          img: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=900&q=85', who: 'Carrier · 2 min' },
+            { n: '02', t: 'Accept reservations',        d: 'Buyers reserve a slot and pay into escrow. You review their item details and either accept or pass — your choice every time.',                                    img: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=900&q=85', who: 'Carrier · per request' },
+            { n: '03', t: 'Buy at retail',              d: 'Visit the shop, pay with your own card, snap the receipt + the product. Upload to chat. Escrow tags your buy as verified.',                                       img: 'https://images.unsplash.com/photo-1555529902-5261145633bf?w=900&q=85', who: 'Carrier · 15–60 min' },
+            { n: '04', t: 'Carry it on your trip',      d: 'It\'s personal luggage — no customs hassle, no shipping. Just your own bag. Live tracking keeps the buyer informed for you.',                                     img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=900&q=85', who: '~ 1–14 days' },
+            { n: '05', t: 'Hand it off, get paid',      d: 'Meetup, doorstep, or buyer pickup. The moment the buyer confirms receipt, escrow releases to your handi wallet — usually within seconds.',                       img: 'https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=900&q=85', who: 'Carrier · instant' },
+          ]).map((s, i, arr) => (
             <React.Fragment key={s.n}>
               {/* Timeline column */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
@@ -118,16 +124,20 @@ const REQUEST_CITY_IMG = {
   MEL: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=1600&q=85',
 };
 
+// Lifted to module scope so post-request edit mode can reuse the same
+// records. TODO(post-backend): replace with API fetch.
+export const REQUESTS = [
+  { id: 1, item: 'Sezane Linen Dress',      store: 'Sezane flagship',         city: 'Paris',     cityCode: 'PAR', from: 'Paris',     to: 'New York',     budget: 180, fee: 35, postedBy: 'Anna L.',  when: '2h ago',  detail: 'Sezane flagship only — the Aurora linen in cream, size 36. Happy to wait for next restock if needed.', urgency: 'medium', carriers: 3 },
+  { id: 2, item: 'Lego Tokyo Skyline',      store: 'Pokémon Center / Bic',     city: 'Tokyo',     cityCode: 'TYO', from: 'Tokyo',     to: 'New York',     budget: 90,  fee: 22, postedBy: 'Marco D.', when: '6h ago',  detail: 'Hard to find in Europe — must be original sealed packaging. The 21051 set, Architecture series.', urgency: 'low', carriers: 5 },
+  { id: 3, item: 'Glossier You EDP 50ml',   store: 'Glossier SoHo',            city: 'New York',  cityCode: 'NYC', from: 'New York',  to: 'San Francisco', budget: 76,  fee: 18, postedBy: 'Riku S.',  when: '1d ago',  detail: 'SoHo flagship carries the larger 50ml bottle. EU only has 30ml. Glass dropper version preferred.', urgency: 'low', carriers: 4 },
+  { id: 4, item: 'Hario V60 02 dripper',    store: 'Hario flagship Asakusa',   city: 'Tokyo',     cityCode: 'TYO', from: 'Tokyo',     to: 'Los Angeles',   budget: 35,  fee: 10, postedBy: 'Jia W.',   when: '3h ago',  detail: 'Any matte black or white — flexible. Ceramic only, plastic V60s are easy to find here.', urgency: 'low', carriers: 5 },
+  { id: 5, item: 'Aesop Resurrection Balm', store: 'Aesop Collins St.',        city: 'Melbourne', cityCode: 'MEL', from: 'Melbourne', to: 'San Francisco', budget: 42,  fee: 12, postedBy: 'Theo K.',  when: '8h ago',  detail: 'AU pricing is much better than EU. 75ml or 120ml — either size works.', urgency: 'low', carriers: 1 },
+  { id: 6, item: 'Hermès silk twilly',      store: 'Faubourg Saint-Honoré',    city: 'Paris',     cityCode: 'PAR', from: 'Paris',     to: 'New York',     budget: 280, fee: 60, postedBy: 'Mei C.',   when: '4h ago',  detail: 'Faubourg Saint-Honoré flagship. Specific pattern — Brides de Gala in rouge/black. SA can hold for 48h.', urgency: 'high', carriers: 3 },
+];
+
 export function PageRequests() {
   const navigate = useNavigate();
-  const requests = [
-    { id: 1, item: 'Sezane Linen Dress',      store: 'Sezane flagship',         city: 'Paris',     cityCode: 'PAR', budget: 180, fee: 35, postedBy: 'Anna L.',  when: '2h ago',  detail: 'Sezane flagship only — the Aurora linen in cream, size 36. Happy to wait for next restock if needed.', urgency: 'medium', carriers: 3 },
-    { id: 2, item: 'Lego Tokyo Skyline',      store: 'Pokémon Center / Bic',     city: 'Tokyo',     cityCode: 'TYO', budget: 90,  fee: 22, postedBy: 'Marco D.', when: '6h ago',  detail: 'Hard to find in Europe — must be original sealed packaging. The 21051 set, Architecture series.', urgency: 'low', carriers: 5 },
-    { id: 3, item: 'Glossier You EDP 50ml',   store: 'Glossier SoHo',            city: 'New York',  cityCode: 'NYC', budget: 76,  fee: 18, postedBy: 'Riku S.',  when: '1d ago',  detail: 'SoHo flagship carries the larger 50ml bottle. EU only has 30ml. Glass dropper version preferred.', urgency: 'low', carriers: 4 },
-    { id: 4, item: 'Hario V60 02 dripper',    store: 'Hario flagship Asakusa',   city: 'Tokyo',     cityCode: 'TYO', budget: 35,  fee: 10, postedBy: 'Jia W.',   when: '3h ago',  detail: 'Any matte black or white — flexible. Ceramic only, plastic V60s are easy to find here.', urgency: 'low', carriers: 5 },
-    { id: 5, item: 'Aesop Resurrection Balm', store: 'Aesop Collins St.',        city: 'Melbourne', cityCode: 'MEL', budget: 42,  fee: 12, postedBy: 'Theo K.',  when: '8h ago',  detail: 'AU pricing is much better than EU. 75ml or 120ml — either size works.', urgency: 'low', carriers: 1 },
-    { id: 6, item: 'Hermès silk twilly',      store: 'Faubourg Saint-Honoré',    city: 'Paris',     cityCode: 'PAR', budget: 280, fee: 60, postedBy: 'Mei C.',   when: '4h ago',  detail: 'Faubourg Saint-Honoré flagship. Specific pattern — Brides de Gala in rouge/black. SA can hold for 48h.', urgency: 'high', carriers: 3 },
-  ];
+  const requests = REQUESTS;
 
   const [city, setCity] = useState('All');
   const [claimed, setClaimed] = useState(new Set());
@@ -160,7 +170,7 @@ export function PageRequests() {
           <p style={{ fontSize: 16, color: 'var(--ink-2)', maxWidth: 520, margin: 0, lineHeight: 1.55 }}>
             Six buyers. Six cities. Pick one heading your way and keep the carry fee in full — escrow on every order.
           </p>
-          <button onClick={() => navigate('/post-trip')} className="h-btn h-btn-rouge">+ Post a request</button>
+          <button onClick={() => navigate('/post-request')} className="h-btn h-btn-rouge">+ Post a request</button>
         </div>
       </section>
 
@@ -368,7 +378,7 @@ function RequestTile({ r, isClaimed, onToggleClaim }) {
     >
       {/* Image — city context */}
       <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden' }}>
-        <img src={img} alt={r.city} className="h-zoom-img" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(.92)' }}/>
+        <img src={img} alt={`${r.city} skyline`} loading="lazy" className="h-zoom-img" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(.92)' }}/>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(20,17,14,.05) 0%, rgba(20,17,14,.55) 100%)' }}/>
         <div style={{ position: 'absolute', top: 14, left: 14, right: 14, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span className="h-mono" style={{ fontSize: 10, letterSpacing: '.14em', color: 'var(--paper)', background: 'rgba(0,0,0,.32)', backdropFilter: 'blur(6px)', padding: '4px 10px', borderRadius: 999 }}>
