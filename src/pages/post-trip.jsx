@@ -1,8 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { HAvatar, HVerified, HNav, HFooter } from '../components/primitives';
+import { TRIPS } from './orders-trips';
 
 const DRAFT_KEY = 'handi_post_trip_draft_v1';
+
+// Map a city code/name from the URL (e.g. NYC, Tokyo) to a friendly display
+// label that matches what the post-trip form expects in its `from`/`to` fields.
+const CITY_DISPLAY = {
+  NYC: 'New York', LA: 'Los Angeles', SF: 'San Francisco',
+  Boston: 'Boston', Chicago: 'Chicago', Miami: 'Miami', Seattle: 'Seattle',
+  Tokyo: 'Tokyo', Osaka: 'Osaka', Kyoto: 'Kyoto', Sapporo: 'Sapporo', Fukuoka: 'Fukuoka',
+  Seoul: 'Seoul', Busan: 'Busan', Incheon: 'Incheon', Jeju: 'Jeju',
+  Paris: 'Paris', Nice: 'Nice', Lyon: 'Lyon', Marseille: 'Marseille',
+  London: 'London', Manchester: 'Manchester', Edinburgh: 'Edinburgh', Birmingham: 'Birmingham',
+};
+const COUNTRY_DISPLAY = { JP: 'Japan', KR: 'South Korea', FR: 'France', GB: 'United Kingdom', US: 'United States' };
+const labelFromQuery = (city, country) => {
+  if (city && CITY_DISPLAY[city]) return CITY_DISPLAY[city];
+  if (country && COUNTRY_DISPLAY[country]) return COUNTRY_DISPLAY[country];
+  return null;
+};
 
 // Restore from localStorage if a draft exists, else use defaults.
 const readDraft = () => {
@@ -19,15 +37,25 @@ const readDraft = () => {
 
 export function PagePostTrip() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const draft = readDraft();
-  const [step, setStep] = useState(draft?.step ?? 0);
-  const [from, setFrom] = useState(draft?.from ?? 'Tokyo');
-  const [to, setTo] = useState(draft?.to ?? 'San Francisco');
-  const [departure, setDeparture] = useState(draft?.departure ?? '2026-05-14');
-  const [arrival, setArrival] = useState(draft?.arrival ?? '2026-05-15');
+  // URL prefill takes priority over a saved draft so the landing-page route
+  // search is honoured when a traveler clicks "I'm a traveler".
+  const queryFrom = labelFromQuery(searchParams.get('fromCity'), searchParams.get('fromCountry'));
+  const queryTo   = labelFromQuery(searchParams.get('toCity'),   searchParams.get('toCountry'));
+  // Edit mode: ?edit=TR-XX prefills the wizard from a known trip and the
+  // final CTA flips from "Publish" to "Save changes".
+  const editId = searchParams.get('edit');
+  const editingTrip = editId ? TRIPS.find(t => t.id === editId) : null;
+  const isEditing = !!editingTrip;
+  const [step, setStep] = useState(isEditing ? 0 : (draft?.step ?? 0));
+  const [from, setFrom] = useState(editingTrip?.from ?? queryFrom ?? draft?.from ?? 'Tokyo');
+  const [to, setTo]     = useState(editingTrip?.to   ?? queryTo   ?? draft?.to   ?? 'San Francisco');
+  const [departure, setDeparture] = useState(editingTrip?.departure ?? draft?.departure ?? '2026-05-14');
+  const [arrival, setArrival] = useState(editingTrip?.arrival ?? draft?.arrival ?? '2026-05-15');
   const [handoffWindow, setHandoffWindow] = useState(draft?.handoffWindow ?? 'week');
-  const [slots, setSlots] = useState(draft?.slots ?? 4);
-  const [feeMode, setFeeMode] = useState(draft?.feeMode ?? 'Suggested');
+  const [slots, setSlots] = useState(editingTrip?.slotsTotal ?? draft?.slots ?? 4);
+  const [feeMode, setFeeMode] = useState(editingTrip?.feeMode ?? draft?.feeMode ?? 'Suggested');
   const [cats, setCats] = useState(draft?.cats instanceof Set ? draft.cats : new Set(['Collectibles', 'Fashion', 'Beauty']));
   const [note, setNote] = useState(draft?.note ?? '');
 
@@ -114,13 +142,14 @@ export function PagePostTrip() {
 
       {/* Compact hero — title + sub on one row, then a tight stepper underneath. */}
       <section style={{ padding: '40px 40px 0', maxWidth: 1100, margin: '0 auto' }}>
-        <div className="h-eyebrow" style={{ marginBottom: 8 }}>For carriers · Step {step + 1} of {stepDefs.length}</div>
+        <div className="h-eyebrow" style={{ marginBottom: 8 }}>{isEditing ? `Editing trip · ${editingTrip.id}` : 'For carriers'} · Step {step + 1} of {stepDefs.length}</div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 24, flexWrap: 'wrap' }}>
           <h1 className="h-display" style={{ fontSize: 44, margin: 0, lineHeight: 1.05 }}>
-            Post a <span style={{ fontStyle: 'italic', color: 'var(--rouge)' }}>trip.</span>
+            {isEditing ? <>Edit <span style={{ fontStyle: 'italic', color: 'var(--rouge)' }}>trip.</span></>
+                       : <>Post a <span style={{ fontStyle: 'italic', color: 'var(--rouge)' }}>trip.</span></>}
           </h1>
           <p style={{ fontSize: 13, color: 'var(--ink-3)', margin: 0, maxWidth: 360 }}>
-            Top carriers earn $400–$800 per route.
+            {isEditing ? 'Changes save when you reach the review step.' : 'Top carriers earn $400–$800 per route.'}
           </p>
         </div>
       </section>
@@ -181,14 +210,17 @@ export function PagePostTrip() {
 
             {/* navigation buttons */}
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 56, paddingTop: 32, borderTop: '1px solid var(--line)' }}>
-              <button onClick={prev} className="h-btn h-btn-ghost">← {step === 0 ? 'Cancel' : 'Back'}</button>
+              <button type="button" onClick={prev} className="h-btn h-btn-ghost">← {step === 0 ? 'Cancel' : 'Back'}</button>
               <button
+                type="button"
                 onClick={next}
                 disabled={!stepValid[step]()}
                 className="h-btn h-btn-primary h-btn-lg"
                 style={{ opacity: stepValid[step]() ? 1 : 0.5, cursor: stepValid[step]() ? 'pointer' : 'not-allowed' }}
               >
-                {step === stepDefs.length - 1 ? 'Publish trip →' : `Continue · ${stepDefs[step+1].label} →`}
+                {step === stepDefs.length - 1
+                  ? (isEditing ? 'Save changes →' : 'Publish trip →')
+                  : `Continue · ${stepDefs[step+1].label} →`}
               </button>
             </div>
           </div>

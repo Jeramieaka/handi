@@ -176,6 +176,19 @@ body { font-family: var(--font-sans); }
 .h-input:focus { border-color: var(--ink); background: white; }
 .h-input::placeholder { color: var(--ink-4); }
 
+/* Focus-visible rings — keyboard users get a clear rouge outline so they can
+   see where they are. Mouse clicks don't trigger this since browsers only
+   apply :focus-visible when keyboard focus is implied. */
+.h-btn:focus-visible,
+.h-input:focus-visible,
+.h-dropdown-row:focus-visible,
+.h-app a:focus-visible,
+.h-app button:focus-visible {
+  outline: 2px solid var(--rouge);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 .h-card {
   background: var(--paper);
   border: 1px solid var(--line);
@@ -218,6 +231,33 @@ body { font-family: var(--font-sans); }
   from { opacity: 0; transform: translateX(20px); }
   to { opacity: 1; transform: translateX(0); }
 }
+@keyframes h-drill-in {
+  from { opacity: .55; transform: translateX(14px); }
+  to   { opacity: 1;   transform: translateX(0); }
+}
+@keyframes h-drill-back {
+  from { opacity: .55; transform: translateX(-14px); }
+  to   { opacity: 1;   transform: translateX(0); }
+}
+@keyframes h-dropdown-in {
+  from { opacity: 0; transform: translateY(-6px) scale(.985); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+@keyframes h-dropdown-out {
+  from { opacity: 1; transform: translateY(0)    scale(1); }
+  to   { opacity: 0; transform: translateY(-10px) scale(.94); }
+}
+
+/* Dropdown row hover: CSS-driven so the highlight tracks even when the row
+   moves under a stationary cursor (during drill-in animations). The
+   data-hover attribute lets keyboard navigation share the same visual. */
+.h-dropdown-row {
+  background: transparent;
+}
+.h-dropdown-row:hover,
+.h-dropdown-row[data-hover="true"] {
+  background: var(--paper-2);
+}
 @keyframes h-marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -225,6 +265,10 @@ body { font-family: var(--font-sans); }
 @keyframes h-pulse-rouge {
   0%, 100% { box-shadow: 0 0 0 0 rgba(139,30,45,.4); }
   50% { box-shadow: 0 0 0 12px rgba(139,30,45,0); }
+}
+@keyframes h-toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .h-fade-up { animation: h-fade-up .6s var(--ease-out) both; }
 .h-card-in { animation: h-card-in .55s var(--ease-out) both; }
@@ -234,6 +278,20 @@ body { font-family: var(--font-sans); }
 /* Word-by-word reveal for hero text (used by StaggerText) */
 @keyframes h-word-up {
   from { opacity: 0; transform: translateY(110%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Pop-in — used for small indicators (category dot, badge) appearing on toggle */
+@keyframes h-pop-in {
+  0%   { opacity: 0; transform: scale(0); }
+  60%  { opacity: 1; transform: scale(1.25); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.h-pop-in { animation: h-pop-in .28s var(--ease-out) both; }
+
+/* Soft slide-up + fade — used by the Browse grid when filters change */
+@keyframes h-tile-in {
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 

@@ -41,6 +41,14 @@ export function PageAuth({ mode = 'signin' }) {
     setPassword('handi2026');
     if (isSignup) setName('Maya Chen');
   };
+  const [forgotSent, setForgotSent] = useState(false);
+  const sendForgot = () => {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setTouched(true);
+      return;
+    }
+    setForgotSent(true);
+  };
   return (
     <div className="h-app" style={{ width: '100%', minHeight: 900 }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.1fr', minHeight: 900 }}>
@@ -103,7 +111,19 @@ export function PageAuth({ mode = 'signin' }) {
               <button type="submit" disabled={!isValid} className="h-btn h-btn-primary h-btn-lg" style={{ marginTop: 8, opacity: isValid ? 1 : 0.5, cursor: isValid ? 'pointer' : 'not-allowed' }}>{isSignup ? 'Create account' : 'Sign in'} →</button>
             </form>
 
-            {!isSignup && <a style={{ display: 'block', marginTop: 16, fontSize: 13, color: 'var(--ink-3)', textAlign: 'center', cursor: 'pointer' }}>Forgot password?</a>}
+            {!isSignup && (
+              forgotSent ? (
+                <div style={{ marginTop: 16, padding: '10px 14px', borderRadius: 8, background: 'var(--rouge-soft)', color: 'var(--rouge-deep)', fontSize: 13, lineHeight: 1.5, textAlign: 'center' }}>
+                  Check {email} — we've sent reset instructions.
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={sendForgot}
+                  style={{ display: 'block', margin: '16px auto 0', padding: 0, background: 'none', border: 'none', fontSize: 13, color: 'var(--ink-3)', textAlign: 'center', cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'underline' }}
+                >Forgot password?</button>
+              )
+            )}
           </div>
 
           <div className="h-mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '.1em' }}>© 2026 HANDI · NYC · TYO · SEL</div>
@@ -111,7 +131,7 @@ export function PageAuth({ mode = 'signin' }) {
 
         {/* RIGHT — image testimonial */}
         <div style={{ position: 'relative', overflow: 'hidden' }}>
-          <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1400&q=85" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(.9)' }} alt=""/>
+          <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1400&q=85" loading="lazy" aria-hidden="true" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(.9)' }}/>
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(45deg, rgba(20,17,14,.5), rgba(20,17,14,.1))' }}/>
           <div style={{ position: 'absolute', top: 40, left: 40, color: 'var(--paper)' }}>
             <span className="h-mono" style={{ fontSize: 11, letterSpacing: '.12em', opacity: .8 }}>NOW IN FLIGHT</span>

@@ -65,7 +65,7 @@ export function PageDashboard({ initialRole = 'buyer' }) {
             <h1 className="h-display" style={{ fontSize: 48, margin: '8px 0 0', lineHeight: 1.04 }}>Hi, <span style={{ fontStyle: 'italic' }}>{u.name.split(' ')[0]}.</span></h1>
             <p style={{ fontSize: 15, color: 'var(--ink-2)', marginTop: 12 }}>{role === 'buyer' ? '2 active orders, 1 carrier in flight to you.' : '1 trip departing in 3 days. 4 pending requests.'}</p>
           </div>
-          <button onClick={() => navigate(role === 'buyer' ? '/requests' : '/post-trip')} className="h-btn h-btn-primary">{role === 'buyer' ? '+ New request' : '+ New trip'}</button>
+          <button onClick={() => navigate(role === 'buyer' ? '/post-request' : '/post-trip')} className="h-btn h-btn-primary">{role === 'buyer' ? '+ New request' : '+ New trip'}</button>
         </div>
 
         {/* Stats grid — 3 numbers, more breathing room. Saved-on-shipping leads

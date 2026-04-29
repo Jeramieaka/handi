@@ -1,10 +1,12 @@
 // 100-persona end-to-end test.
 // Each persona walks the full flow: Landing → Browse → Item → Reserve → Cart → Checkout.
-// Real headless Chrome via Puppeteer drives the actual React app on http://localhost:3001.
+// Run against the Vite dev server (default port 5173). Override the base URL
+// with E2E_BASE if your dev server is somewhere else, e.g.
+//   E2E_BASE=http://localhost:3001 node _e2e.mjs
 
 import puppeteer from 'puppeteer';
 
-const BASE = process.env.E2E_BASE || 'http://localhost:3002';
+const BASE = process.env.E2E_BASE || 'http://localhost:5173';
 const N = 100;
 const CONCURRENCY = 3;
 

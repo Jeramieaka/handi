@@ -3,6 +3,8 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { PageTransition } from './components/motion';
 import { ProtectedRoute } from './components/protected-route';
 import { PageNotFound } from './pages/not-found';
+import { SupportWidget } from './components/support-widget';
+import { ToastHost } from './components/toast-host';
 
 // Reset scroll to top whenever the route changes — React Router preserves
 // the previous page's scroll position by default, which makes new pages
@@ -16,7 +18,9 @@ function ScrollToTop() {
 // Public — psych-enhanced versions for Landing/Browse/Item Detail (the conversion-critical surfaces)
 import { PageLandingPsy, PageBrowsePsy, PageItemDetailPsy } from './pages/psychology-overrides';
 import { PageHowItWorks, PageRequests, PageCart, PageCheckout } from './pages/public-extras';
+import { PageCarriers } from './pages/carriers';
 import { PagePostTrip } from './pages/post-trip';
+import { PagePostRequest } from './pages/post-request';
 import { PageAuth } from './pages/auth';
 
 // App (signed-in)
@@ -36,8 +40,10 @@ export default function App() {
         <Route path="/item/:id" element={<PageItemDetailPsy />} />
         <Route path="/item" element={<PageItemDetailPsy />} />
         <Route path="/how-it-works" element={<PageHowItWorks />} />
+        <Route path="/carriers" element={<PageCarriers />} />
         <Route path="/requests" element={<PageRequests />} />
         <Route path="/post-trip" element={<PagePostTrip />} />
+        <Route path="/post-request" element={<PagePostRequest />} />
         <Route path="/signin" element={<PageAuth mode="signin" />} />
         <Route path="/signup" element={<PageAuth mode="signup" />} />
         <Route path="/cart" element={<PageCart />} />
@@ -61,6 +67,8 @@ export default function App() {
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       </PageTransition>
+      <SupportWidget/>
+      <ToastHost/>
     </div>
   );
 }

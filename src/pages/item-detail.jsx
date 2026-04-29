@@ -32,7 +32,7 @@ export function PageItemDetail() {
           {/* GALLERY */}
           <div>
             <div style={{ position: 'relative', aspectRatio: '1', borderRadius: 'var(--r-lg)', overflow: 'hidden', background: 'var(--paper-2)' }}>
-              <img src={gallery[imgIdx]} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt=""/>
+              <img src={gallery[imgIdx]} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={`Item photo ${imgIdx + 1}`}/>
               <span className="h-chip h-chip-noir" style={{ position: 'absolute', top: 16, left: 16, fontSize: 10, fontFamily: 'var(--font-mono)', letterSpacing: '.1em' }}>TOKYO · LIMITED</span>
               <button style={iconBtnAbs(16, 'right')} aria-label="Save">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
@@ -43,7 +43,7 @@ export function PageItemDetail() {
                 <button key={i} onClick={() => setImgIdx(i)} style={{
                   width: 80, height: 80, padding: 0, border: '2px solid', borderColor: i === imgIdx ? 'var(--ink)' : 'transparent', borderRadius: 8, overflow: 'hidden', cursor: 'pointer'
                 }}>
-                  <img src={g} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt=""/>
+                  <img src={g} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={`Item thumbnail ${i + 1}`}/>
                 </button>
               ))}
             </div>
